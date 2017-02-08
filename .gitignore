@@ -1,3 +1,7 @@
+#specific to the project
+local.persistent/
+local.virtualenv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
