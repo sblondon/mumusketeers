@@ -1,0 +1,19 @@
+{% import 'macro/form.jinja' as macros %}
+{% extends 'admin/base.html' %}
+
+
+{% block menu %}
+{{ generate_menu('users') }}
+{% endblock %}
+
+
+{% import 'macro/form.jinja' as macros %}
+{% block content %}
+
+<div class="row">
+    {% call macros.render_form(form, form_title='Modifier un utilisateur', action_text='Modifier') %}
+            {{ macros.render_field(form.email, placeholder="Entrez l'e-mail") }}
+            {{ macros.render_field(form.password, placeholder='Nouveau mot de passe') }}
+    {% endcall %}
+</div>
+{% endblock %}

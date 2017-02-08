@@ -1,0 +1,59 @@
+{% extends 'admin/base.html' %}
+
+
+{% block menu %}
+{{ generate_menu('users') }}
+{% endblock %}
+
+
+{% import 'macro/form.jinja' as macros %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <fieldset>
+            <legend>Liste des utilisateurs <span class="badge">{{ users_count }}</span></legend>
+            {% if not users_count %}
+            Aucun utilisateur
+            {% else %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>E-mail</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr><td>{{ user.email }}</td>
+                        <td><a href="{{ forms.admin.ConnectAsUser.make_url(user) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Connexion</a>
+                            <a href="{{ forms.admin.DeleteUser.make_url(user) }}" class="btn btn-danger btn-sm delete-button"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
+                            <a href="{{ forms.admin.EditUser.make_url(user) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        {% call macros.render_form(form, form_title='Ajouter un utilisateur', action_text='Créer') %}
+            {{ macros.render_field(form.email, placeholder='Entrez l\'email') }}
+            {{ macros.render_field(form.password, placeholder='Entrez le mot de passe') }}
+        {% endcall %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(".delete-button").click(function(event){
+        confirmed = confirm("La suppression d'un utilisateur est définitive. Continuer ?")
+        if (! confirmed){
+            event.preventDefault();
+        }
+    })
+</script>
+{% endblock %}
+

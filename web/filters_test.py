@@ -1,0 +1,25 @@
+import unittest
+
+import web.filters
+
+
+class TestPrettyBoolean(unittest.TestCase):
+    def test(self):
+        self.assertEqual("Oui", web.filters.pretty_boolean(True))
+        self.assertEqual("Oui", web.filters.pretty_boolean([1, 2]))
+
+        self.assertEqual("Non", web.filters.pretty_boolean(False))
+        self.assertEqual("Non", web.filters.pretty_boolean([]))
+
+
+class TestShuffle(unittest.TestCase):
+    def test(self):
+        ORIGIN = [1, 2, 3, 4, 5]
+        shuffleds = []
+
+        for i in range(4):
+            _shuffled = web.filters.shuffle(ORIGIN)
+            self.assertEqual(set(ORIGIN), set(_shuffled))
+            shuffleds.append(_shuffled)
+        self.assertFalse( shuffleds[0] == shuffleds[1] == shuffleds[2] == shuffleds[3] )
+

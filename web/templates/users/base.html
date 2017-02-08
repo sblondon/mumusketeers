@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Accueil</title>
+    <link href="/media/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 70px; }
+    </style>        
+    {% block style %}{% endblock %}
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script>window.html5 || document.write('<script src="/media/js/html5shiv.min.js"><\/script>')</script>
+        <script src="/media/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+{% macro generate_menu(active_item='') -%}
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/user/">
+                    <span class="glyphicon glyphicon-home"></span>
+                </a>
+            </div>
+            {% if user %}
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a href="/user/logout/" title="{{ user.email }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {#<li{% if active_item == 'programmes' %} class="active"{% endif %}>
+                    <a href="/user/programmes/"><span class="glyphicon glyphicon-th"></span> Programmes</a>
+                    </li>#}
+            </ul>
+            {% else %}
+            <p class="navbar-text navbar-right">Espace réservé aux utilisateurs identifiés</p>
+            {% endif %}
+        </div>
+    </nav>
+{%- endmacro %}
+<body>
+    {% block menu %}
+    {{ generate_menu() }}
+    {% endblock %}
+    <div class="container">
+        {% if user_notifs %}
+        <div>
+            {% for notif in user_notifs %}
+            <div class="alert alert-{{ notif.level|level_to_bootstrap_class }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ notif.message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/media/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        if (!window.console){ console = {log: function() {}} };
+    </script>
+    {% block script %}{% endblock %}
+</body>
+</html>

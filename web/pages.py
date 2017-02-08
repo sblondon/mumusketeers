@@ -1,0 +1,48 @@
+import ytemplates
+
+import web.public.forms
+import web.session
+
+
+class Page(ytemplates.Template):
+
+    def __init__(self):
+        self._form = None
+
+    def form(self, form):
+        """ WTForm """
+        self._form = form
+
+    def global_context(self):
+        cxt = {
+                'user_notifs': web.session.pop_user_notifs(),
+                'form': self._form,
+               }
+        cxt.update(self._static_context())
+        return cxt
+
+    def context_update(self):
+        """ Méthode à redéfinir dans les classes filles """
+        return {}
+
+    def context(self):
+        _context = self.global_context()
+        _context.update(self.context_update())
+        return _context
+
+    @classmethod
+    def _static_context(self):
+        import web.users.forms
+        return {
+            "pages": {},
+            "forms": {
+                "public": {
+                    "Login": web.public.forms.Login,
+                },
+                "admin": {
+                    "ConnectAsUser": web.admin.forms.ConnectAsUser,
+                    "DeleteUser": web.admin.forms.DeleteUser,
+                    "EditUser": web.admin.forms.EditUser,
+                },
+            },
+        }
