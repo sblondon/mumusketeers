@@ -2,7 +2,7 @@
 
 . ./scripts/local/display_service.sh
 
-#PORT=8000
+PORT=8000
 VERSIONIZED=`grep yversionize.VERSION web/settings.py | cut -d " " -f 3 | sed s/\"//g`
 
 env PYTHONPATH=. ./local.virtualenv/bin/uwsgi \
