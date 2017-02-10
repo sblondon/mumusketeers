@@ -1,18 +1,7 @@
 #! /bin/bash
 
-mkdir -p local.persistent/statistics
-mkdir -p local.persistent/logs
 
-if [ "$(uname)" = "Darwin" ]
-then
-    #DEPS=`cat requirements.txt | grep -v qrcode`
-    #DEPS ne sert pas car on utilise ${REQUIREMENTS} dans la suite du script
-    export CC=gcc
-    export CFLAGS=-Qunused-arguments
-    export CPPFLAGS=-Qunused-arguments
-fi
-
-PYTHON='python3'
+PYTHON='python3.5'
 WHEEL_DIR=${HOME}/.pip/wheelhouse
 REQUIREMENTS=../../requirements.txt
 PYPI_YAAL="https://${PIP_YAAL_USER}:${PIP_YAAL_PASSWORD}@pypi.yaal.fr/yaal/prod/+simple/"
@@ -22,7 +11,7 @@ rm -rf local.virtualenv
 virtualenv --python=${PYTHON} local.virtualenv
 
 cd ./local.virtualenv/bin/
-./pip install --upgrade pip wheel
+./pip install --upgrade wheel
 
 {
         ./pip install --requirement ${REQUIREMENTS} --no-index --find-links "file://${WHEEL_DIR}"

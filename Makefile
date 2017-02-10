@@ -1,4 +1,6 @@
 install: clean
+	mkdir --parents local.persistent/statistics
+	mkdir --parents local.persistent/logs
 	sh ./scripts/local/install-virtualenv.sh
 	
 run:
@@ -13,7 +15,7 @@ run-zeo:
 check:
 	find web -name '*.py' -exec ./local.virtualenv/bin/pyflakes {} +
 
-test: check
+test:
 	./local.virtualenv/bin/py.test --ignore local.virtualenv --ignore node_modules --ignore media -n auto $* --cov web/ --cov models/ --color=yes
 
 clean:
