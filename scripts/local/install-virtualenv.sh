@@ -1,14 +1,14 @@
 #! /bin/bash
 
 
-PYTHON='python3.5'
+PYTHON=python3.5
 WHEEL_DIR=${HOME}/.pip/wheelhouse
 REQUIREMENTS=../../requirements.txt
 PYPI_YAAL="https://${PIP_YAAL_USER}:${PIP_YAAL_PASSWORD}@pypi.yaal.fr/yaal/prod/+simple/"
 
 
 rm -rf local.virtualenv
-virtualenv --python=${PYTHON} local.virtualenv
+${PYTHON} -m venv local.virtualenv
 
 cd ./local.virtualenv/bin/
 ./pip install --upgrade wheel
