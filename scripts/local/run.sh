@@ -1,5 +1,7 @@
 #! /bin/sh
 
+. ./scripts/local/display_service.sh
+
 OUT_DIR_PATH=./local.persistent/logs/runall
 mkdir -p ${OUT_DIR_PATH}
 
