@@ -13,7 +13,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
     def test_no_users_from_admin_home(self):
         response = self.testapp.get('/admin/', status=200)
 
-        response = response.click('Utilisateurs')
+        response = response.click('Players')
 
         self.assertEquals('text/html', response.content_type)
         response.mustcontain('Admin')
