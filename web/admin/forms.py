@@ -53,7 +53,7 @@ class EditUser(wtforms.Form):
 
 
 class DeleteUser(wtforms.Form):
-    action = '/admin/user/del/'
+    action = '/admin/user/delete/'
     action_regex = '^{action}(?P<uuid>{uuid})$'.format(action=action, uuid=web.constantes.UUID_REGEX)
 
     @classmethod

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import transaction
 
 import web.tests.helper
 
@@ -6,12 +7,14 @@ import yzodb
 
 import models.users
 import web.strings
+import web.admin.pages
+import web.admin.forms
 
 
 class TestAdminUsers(web.tests.helper.WebTestCase):
 
     def test_no_users_from_admin_home(self):
-        response = self.testapp.get('/admin/', status=200)
+        response = self.testapp.get(web.admin.pages.Home.url, status=200)
 
         response = response.click('Players')
 
@@ -21,7 +24,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_add_user(self):
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('Aucun utilisateur')
         response.form.fields['email'][0].value = 'user@yaal.fr '
         response.form.fields['password'][0].value = 'password'
@@ -38,7 +41,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_format_error_on_add_user(self):
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('Aucun utilisateur')
         response.form.fields['email'][0].value = 'user@yaal'
         response.form.fields['password'][0].value = 'pass'
@@ -53,8 +56,11 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_email_unique_error_on_add_user(self):
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
-        response = self.testapp.get('/admin/users/', status=200)
+        with yzodb.connection():
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
+
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
         response.form.fields['email'][0].value = 'user@yaal.fr'
         response.form.fields['password'][0].value = 'yaal and python for ever'
@@ -68,7 +74,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_redirect_on_get_url_add_user(self):
-        response = self.testapp.get('/admin/user/add/', status=302)
+        response = self.testapp.get(web.admin.forms.CreateUser.action, status=302)
         response = response.follow(status=200)
 
         response.mustcontain('Admin')
@@ -76,9 +82,10 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_on_connect_as(self):
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
-
-        response = self.testapp.get('/admin/users/', status=200)
+        with yzodb.connection():
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         response = response.click('Connexion')
@@ -89,9 +96,11 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_delete_user(self):
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
+        with yzodb.connection():
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
 
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         response = response.click('Supprimer')
@@ -102,7 +111,9 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_cannot_delete_user(self):
-        response = self.testapp.get('/admin/user/del/12345678-1234-1234-1234-123456789012', status=200)
+        class FakePlayer:
+            id = '12345678-1234-1234-1234-123456789012'
+        response = self.testapp.get(web.admin.forms.DeleteUser.make_url(FakePlayer()), status=200)
 
         response.mustcontain('Admin')
         response.mustcontain('Aucun utilisateur')
@@ -113,9 +124,11 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 class TestEditUser(web.tests.helper.WebTestCase):
 
     def test_change_all(self):
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
+        with yzodb.connection():
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
 
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         response = response.click('Modifier')
@@ -134,9 +147,11 @@ class TestEditUser(web.tests.helper.WebTestCase):
         response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="yop@yaal.fr"))
 
     def test_keep_email(self):
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
+        with yzodb.connection():
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
 
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         response = response.click('Modifier')
@@ -150,9 +165,11 @@ class TestEditUser(web.tests.helper.WebTestCase):
 
 
     def test_keep_password(self):
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
+        with yzodb.connection():
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
 
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         response = response.click('Modifier')
@@ -170,10 +187,12 @@ class TestEditUser(web.tests.helper.WebTestCase):
 
 
     def test_cannot_overwrite_other_user_email(self):
-        self.testapp.post('/admin/user/add/', dict(email='previous_user@yaal.fr', password='password'))
-        self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
+        with yzodb.connection():
+            models.users.create('previous_user@yaal.fr', 'password')
+            models.users.create('user@yaal.fr', 'password')
+            transaction.commit()
 
-        response = self.testapp.get('/admin/users/', status=200)
+        response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         with yzodb.connection():
