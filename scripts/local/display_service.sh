@@ -9,5 +9,5 @@ else
     IP_ADDRESS=`ifconfig | grep -A 5 "en0" | grep 'inet ' | cut -d " " -f 2`
 fi
 
-echo "\tLe service est sur http://${IP_ADDRESS}:${PORT}"
+echo "\tThe web service is available at http://${IP_ADDRESS}:${PORT}"
 
