@@ -18,7 +18,7 @@ def connect(request, uuid=""):
         return ywsgi.redirect(web.users.pages.Home.url)
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.LOGIN_ERROR)
-    _page = web.admin.pages.Users()
+    _page = web.admin.pages.Players()
     return ywsgi.html(_page.render())
 
 
@@ -28,9 +28,9 @@ def create_user(request):
     if _form.validate():
         _user = models.users.create(_form.email.data, _form.password.data)
         web.session.add_user_success_notif(web.strings.USER_CREATE_SUCCESS.format(user=_user.email))
-        return ywsgi.redirect(web.admin.pages.Users.url)
+        return ywsgi.redirect(web.admin.pages.Players.url)
     else:
-        _page = web.admin.pages.Users()
+        _page = web.admin.pages.Players()
         _page.form(_form)
         web.session.add_user_error_notif(web.strings.USER_CREATE_FAILURE)
         return ywsgi.html(_page.render())
@@ -42,10 +42,10 @@ def delete_user(request, uuid=""):
         _user = models.users.User.read(uuid)
         _user.delete()
         web.session.add_user_success_notif(web.strings.USER_DELETE_SUCCESS)
-        return ywsgi.redirect(web.admin.pages.Users.url)
+        return ywsgi.redirect(web.admin.pages.Players.url)
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.USER_DELETE_FAILURE)
-    _page = web.admin.pages.Users()
+    _page = web.admin.pages.Players()
     _form = web.admin.forms.CreateUser()
     _page.form(_form)
     return ywsgi.html(_page.render())
@@ -62,7 +62,7 @@ def edit_user(request, uuid=""):
                 _user.password = _form.password.data
             _user.save()
             web.session.add_user_success_notif(web.strings.USER_EDIT_SUCCESS.format(user=_user.email))
-            return ywsgi.redirect(web.admin.pages.Users.url)
+            return ywsgi.redirect(web.admin.pages.Players.url)
         else:
             web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
             _page = web.admin.pages.EditUser()
@@ -73,7 +73,7 @@ def edit_user(request, uuid=""):
 
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
-    _page = web.admin.pages.Users()
+    _page = web.admin.pages.Players()
     _form = web.admin.forms.CreateUser()
     _page.form(_form)
     return ywsgi.html(_page.render())

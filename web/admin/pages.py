@@ -14,7 +14,7 @@ class Home(AdminPage):
     template = 'admin/index.html'
 
 
-class Users(AdminPage):
+class Players(AdminPage):
     url = '/admin/users/'
     url_regex = '^{0}$'.format(url)
     template = 'admin/users.html'

@@ -12,7 +12,7 @@ def home(request):
 
 
 def users(request):
-    _page = web.admin.pages.Users()
+    _page = web.admin.pages.Players()
     _page.form(web.admin.forms.CreateUser())
     return ywsgi.html(_page.render())
 
