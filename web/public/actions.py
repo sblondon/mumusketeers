@@ -34,7 +34,7 @@ def get_new_password(request):
         user = models.users.read(form.email.data)
         if user:
             password = rstr.domainsafe(
-                web.admin.forms.CreateUser.MIN_PASSWORD_LENGTH,
+                web.admin.forms.CreatePlayer.MIN_PASSWORD_LENGTH,
                 exclude=["-", "0", "1", "O", "l"])
             user.password = password
         return ywsgi.html("Bravo")

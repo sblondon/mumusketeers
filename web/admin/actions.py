@@ -24,7 +24,7 @@ def connect(request, uuid=""):
 
 @yzodb.commit
 def create_user(request):
-    _form = web.admin.forms.CreateUser(request.form)
+    _form = web.admin.forms.CreatePlayer(request.form)
     if _form.validate():
         _user = models.users.create(_form.email.data, _form.password.data)
         web.session.add_user_success_notif(web.strings.USER_CREATE_SUCCESS.format(user=_user.email))
@@ -46,7 +46,7 @@ def delete_user(request, uuid=""):
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.USER_DELETE_FAILURE)
     _page = web.admin.pages.Players()
-    _form = web.admin.forms.CreateUser()
+    _form = web.admin.forms.CreatePlayer()
     _page.form(_form)
     return ywsgi.html(_page.render())
 
@@ -55,7 +55,7 @@ def delete_user(request, uuid=""):
 def edit_user(request, uuid=""):
     try:
         _user = models.users.Player.read(uuid)
-        _form = web.admin.forms.EditUser(request.form)
+        _form = web.admin.forms.EditPlayer(request.form)
         if _form.validate() or _form.email.data == _user.email:
             _user.email  = _form.email.data
             if _form.password.data:
@@ -65,7 +65,7 @@ def edit_user(request, uuid=""):
             return ywsgi.redirect(web.admin.pages.Players.url)
         else:
             web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
-            _page = web.admin.pages.EditUser()
+            _page = web.admin.pages.EditPlayer()
             _form.action = _form.action + uuid
             _page.form(_form)
             _page.user = _user
@@ -74,7 +74,7 @@ def edit_user(request, uuid=""):
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
     _page = web.admin.pages.Players()
-    _form = web.admin.forms.CreateUser()
+    _form = web.admin.forms.CreatePlayer()
     _page.form(_form)
     return ywsgi.html(_page.render())
 

@@ -34,15 +34,20 @@ class Page(ytemplates.Template):
     def _static_context(self):
         import web.users.forms
         return {
-            "pages": {},
+            "pages": {
+                "admin": {
+                    "Players": web.admin.pages.Players,
+                },
+            },
             "forms": {
                 "public": {
                     "Login": web.public.forms.Login,
                 },
                 "admin": {
-                    "ConnectAsUser": web.admin.forms.ConnectAsUser,
-                    "DeleteUser": web.admin.forms.DeleteUser,
-                    "EditUser": web.admin.forms.EditUser,
+                    "ConnectAsPlayer": web.admin.forms.ConnectAsPlayer,
+                    "DeletePlayer": web.admin.forms.DeletePlayer,
+                    "EditPlayer": web.admin.forms.EditPlayer,
                 },
             },
         }
+

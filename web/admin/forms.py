@@ -6,8 +6,8 @@ import web.strings
 
 
 
-class CreateUser(wtforms.Form):
-    action = '/admin/user/add/'
+class CreatePlayer(wtforms.Form):
+    action = '/admin/player/add/'
     action_regex = '^{0}$'.format(action)
     method = 'POST'
     MIN_PASSWORD_LENGTH = 6
@@ -27,8 +27,8 @@ class CreateUser(wtforms.Form):
             )
 
 
-class EditUser(wtforms.Form):
-    action = '/admin/user/edit/'
+class EditPlayer(wtforms.Form):
+    action = '/admin/player/edit/'
     action_regex = '^{0}(?P<uuid>{uuid})$'.format(action, uuid=web.constantes.UUID_REGEX)
     method = 'POST'
     MIN_PASSWORD_LENGTH = 6
@@ -52,8 +52,8 @@ class EditUser(wtforms.Form):
         return cls.action+"{0}".format(user.id)   
 
 
-class DeleteUser(wtforms.Form):
-    action = '/admin/user/delete/'
+class DeletePlayer(wtforms.Form):
+    action = '/admin/player/delete/'
     action_regex = '^{action}(?P<uuid>{uuid})$'.format(action=action, uuid=web.constantes.UUID_REGEX)
 
     @classmethod
@@ -61,8 +61,8 @@ class DeleteUser(wtforms.Form):
         return cls.action+"{0}".format(user.id)   
 
 
-class ConnectAsUser(wtforms.Form):
-    action = '/admin/user/connect/'
+class ConnectAsPlayer(wtforms.Form):
+    action = '/admin/player/connect/'
     action_regex = '^{action}(?P<uuid>{uuid})$'.format(action=action, uuid=web.constantes.UUID_REGEX)
 
     @classmethod

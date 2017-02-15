@@ -11,7 +11,7 @@ import web.admin.pages
 import web.admin.forms
 
 
-class TestAdminUsers(web.tests.helper.WebTestCase):
+class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_no_users_from_admin_home(self):
         response = self.testapp.get(web.admin.pages.Home.url, status=200)
@@ -74,7 +74,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
     def test_redirect_on_get_url_add_user(self):
-        response = self.testapp.get(web.admin.forms.CreateUser.action, status=302)
+        response = self.testapp.get(web.admin.forms.CreatePlayer.action, status=302)
         response = response.follow(status=200)
 
         response.mustcontain('Admin')
@@ -113,7 +113,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
     def test_cannot_delete_user(self):
         class FakePlayer:
             id = '12345678-1234-1234-1234-123456789012'
-        response = self.testapp.get(web.admin.forms.DeleteUser.make_url(FakePlayer()), status=200)
+        response = self.testapp.get(web.admin.forms.DeletePlayer.make_url(FakePlayer()), status=200)
 
         response.mustcontain('Admin')
         response.mustcontain('Aucun utilisateur')
@@ -121,7 +121,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
 
 
 
-class TestEditUser(web.tests.helper.WebTestCase):
+class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_change_all(self):
         with yzodb.connection():

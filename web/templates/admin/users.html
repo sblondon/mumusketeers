@@ -25,9 +25,9 @@
                 <tbody>
                     {% for user in users %}
                     <tr><td>{{ user.email }}</td>
-                        <td><a href="{{ forms.admin.ConnectAsUser.make_url(user) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Connexion</a>
-                            <a href="{{ forms.admin.DeleteUser.make_url(user) }}" class="btn btn-danger btn-sm delete-button"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
-                            <a href="{{ forms.admin.EditUser.make_url(user) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+                        <td><a href="{{ forms.admin.ConnectAsPlayer.make_url(user) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Connexion</a>
+                            <a href="{{ forms.admin.DeletePlayer.make_url(user) }}" class="btn btn-danger btn-sm delete-button"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
+                            <a href="{{ forms.admin.EditPlayer.make_url(user) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
                         </td>
 
                     </tr>

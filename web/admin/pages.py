@@ -15,7 +15,7 @@ class Home(AdminPage):
 
 
 class Players(AdminPage):
-    url = '/admin/users/'
+    url = '/admin/players/'
     url_regex = '^{0}$'.format(url)
     template = 'admin/users.html'
 
@@ -26,8 +26,8 @@ class Players(AdminPage):
         )
 
 
-class EditUser(AdminPage):
-    url = '/admin/user/edit/'
+class EditPlayer(AdminPage):
+    url = '/admin/player/edit/'
     url_regex = '^{url}(?P<uuid>{uuid})'.format(url=url, uuid=web.constantes.UUID_REGEX)
     template = 'admin/edit_users.html'
     _user = None
