@@ -7,20 +7,20 @@ import web.users.forms
 
 
 def create(email, password):
-    user = read(email)
-    if user:
+    player = read(email)
+    if player:
         raise models.NotAllowed()
 
-    user = Player.create()
-    user._email = email.lower()
-    user.password = password
-    Indexes.add(user)
-    return user
+    player = Player.create()
+    player._email = email.lower()
+    player.password = password
+    Indexes.add(player)
+    return player
 
 def authenticate(email, password):
-    user = read(email)
-    if user and user.password_equals(password):
-        return user
+    player = read(email)
+    if player and player.password_equals(password):
+        return player
 
 def read(email):
     try:
@@ -67,20 +67,20 @@ class Player(yzodb.Model):
 
 
 class Indexes(yzodb.Model):
-    table = 'users_indexes'
-    users_by_email = yzodb.ModelDictAttribute(model=Player)
+    table = 'players_indexes'
+    players_by_email = yzodb.ModelDictAttribute(model=Player)
 
     @classmethod
-    def add(cls, user):
-        cls._instance().users_by_email[user.email] = user
+    def add(cls, player):
+        cls._instance().players_by_email[player.email] = player
 
     @classmethod
     def get(cls, email):
-        return cls._instance().users_by_email[email.lower()]
+        return cls._instance().players_by_email[email.lower()]
 
     @classmethod
     def delete(cls, user):
-        del cls._instance().users_by_email[user.email]
+        del cls._instance().players_by_email[user.email]
 
     @classmethod
     def _instance(cls):
