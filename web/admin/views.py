@@ -18,7 +18,7 @@ def users(request):
 
 
 def edit_user(request, uuid=""):
-    _user = models.users.User.read(uuid)
+    _user = models.users.Player.read(uuid)
     _page = web.admin.pages.EditUser()
     _page.user = _user
     _form = web.admin.forms.EditUser()

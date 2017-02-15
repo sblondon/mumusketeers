@@ -49,7 +49,7 @@ def login(user):
 
 def user():
     try:
-        return models.users.User.read(get()[USER_ID_KEY])
+        return models.users.Player.read(get()[USER_ID_KEY])
     except KeyError:
         logout()
 

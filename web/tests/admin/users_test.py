@@ -33,7 +33,7 @@ class TestAdminUsers(web.tests.helper.WebTestCase):
         response = response.follow(status=200)
 
         with yzodb.connection():
-            [_user] = models.users.User.read_all()
+            [_user] = models.users.Player.read_all()
             self.assertTrue(_user.password_equals('password'))
 
         response.mustcontain('user@yaal.fr')
@@ -141,7 +141,7 @@ class TestEditUser(web.tests.helper.WebTestCase):
         response = response.follow(status=200)
 
         with yzodb.connection():
-            [_user] = models.users.User.read_all()
+            [_user] = models.users.Player.read_all()
             self.assertTrue(_user.password_equals('pastag'))
 
         response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="yop@yaal.fr"))
@@ -180,7 +180,7 @@ class TestEditUser(web.tests.helper.WebTestCase):
         response = response.follow(status=200)
 
         with yzodb.connection():
-            [_user] = models.users.User.read_all()
+            [_user] = models.users.Player.read_all()
             self.assertTrue(_user.password_equals('password'))
 
         response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="user@yaal.fr"))

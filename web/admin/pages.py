@@ -21,8 +21,8 @@ class Players(AdminPage):
 
     def context_update(self):
         return dict(
-            users=models.users.User.read_all(),
-            users_count=models.users.User.count(),
+            users=models.users.Player.read_all(),
+            users_count=models.users.Player.count(),
         )
 
 

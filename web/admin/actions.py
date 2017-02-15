@@ -13,7 +13,7 @@ import web.users.pages
 
 def connect(request, uuid=""):
     try:
-        _user = models.users.User.read(uuid)
+        _user = models.users.Player.read(uuid)
         web.session.login(_user)
         return ywsgi.redirect(web.users.pages.Home.url)
     except yzodb.ObjectNotFoundException:
@@ -39,7 +39,7 @@ def create_user(request):
 @yzodb.commit
 def delete_user(request, uuid=""):
     try:
-        _user = models.users.User.read(uuid)
+        _user = models.users.Player.read(uuid)
         _user.delete()
         web.session.add_user_success_notif(web.strings.USER_DELETE_SUCCESS)
         return ywsgi.redirect(web.admin.pages.Players.url)
@@ -54,7 +54,7 @@ def delete_user(request, uuid=""):
 @yzodb.commit
 def edit_user(request, uuid=""):
     try:
-        _user = models.users.User.read(uuid)
+        _user = models.users.Player.read(uuid)
         _form = web.admin.forms.EditUser(request.form)
         if _form.validate() or _form.email.data == _user.email:
             _user.email  = _form.email.data

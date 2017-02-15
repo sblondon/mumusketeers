@@ -11,7 +11,7 @@ def create(email, password):
     if user:
         raise models.NotAllowed()
 
-    user = User.create()
+    user = Player.create()
     user._email = email.lower()
     user.password = password
     Indexes.add(user)
@@ -30,15 +30,15 @@ def read(email):
 
 
 
-class User(yzodb.Model):
-    table = 'users'
+class Player(yzodb.Model):
+    table = 'players'
 
     _email = yzodb.SimpleAttribute()
     _password = yzodb.SimpleAttribute()
 
     def delete(self):
         Indexes.delete(self)
-        super(User, self).delete()
+        super(Player, self).delete()
 
     @property
     def email(self):
@@ -68,7 +68,7 @@ class User(yzodb.Model):
 
 class Indexes(yzodb.Model):
     table = 'users_indexes'
-    users_by_email = yzodb.ModelDictAttribute(model=User)
+    users_by_email = yzodb.ModelDictAttribute(model=Player)
 
     @classmethod
     def add(cls, user):
