@@ -17,6 +17,8 @@ ROUTER.add(web.admin.actions.delete_user, web.admin.forms.DeletePlayer.action_re
 ROUTER.add(web.admin.actions.edit_user, web.admin.forms.EditPlayer.action_regex, web.admin.forms.EditPlayer.method)
 ROUTER.add(web.admin.actions.connect, web.admin.forms.ConnectAsPlayer.action_regex, 'GET')
 
+ROUTER.add(web.admin.views.games, web.admin.pages.Games.url_regex, 'GET')
+
 def get():
     return ROUTER
 

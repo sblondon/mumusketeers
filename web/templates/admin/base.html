@@ -27,6 +27,9 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
+                <li{% if active_item == 'games' %} class="active"{% endif %}>
+                <a href="{{ pages.admin.Games.url }}"><span class="glyphicon glyphicon-tower"></span> Games</a>
+                </li>
                 <li{% if active_item == 'users' %} class="active"{% endif %}>
                 <a href="{{ pages.admin.Players.url }}"><span class="glyphicon glyphicon-user"></span> Players</a>
                 </li>

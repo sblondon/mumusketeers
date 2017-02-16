@@ -45,3 +45,9 @@ class EditPlayer(AdminPage):
             user=self.user,
         )
 
+
+class Games(AdminPage):
+    url = '/admin/games'
+    url_regex = '^{0}$'.format(url)
+    template = 'admin/games.html'
+
