@@ -1,7 +1,7 @@
 import logging
 import tempfile
 
-APP_NAME = "ywebstarter"
+APP_NAME = "mumusketeers"
 COOKIE_NAME = APP_NAME + ".cookie"
 HOST = "http://localhost:80"
 
