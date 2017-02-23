@@ -6,7 +6,39 @@
 {% endblock %}
 
 
+{% import 'macro/form.jinja' as macros %}
 {% block content %}
-No games
+<div class="row">
+    <div class="col-md-8">
+        <fieldset>
+            <legend>Games <span class="badge">{{ games_count }}</span></legend>
+            {% if not games_count %}
+            No games
+            {% else %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                    <tr><td>{{ game.name }}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        {% call macros.render_form(form, form_title="Add a game", action_text="Create") %}
+            {{ macros.render_field(form.name, placeholder="Insert name") }}
+        {% endcall %}
+    </div>
+</div>
 {% endblock %}
+
 

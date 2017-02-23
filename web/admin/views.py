@@ -30,5 +30,6 @@ def edit_user(request, uuid=""):
 
 def games(request):
     _page = web.admin.pages.Games()
+    _page.form(web.admin.forms.CreateGame())
     return ywsgi.html(_page.render())
 

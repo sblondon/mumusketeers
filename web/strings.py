@@ -19,3 +19,5 @@ LOGIN_ERROR = "Erreur de connexion, verifiez votre saisie."
 LOGIN_SUCCESS = "Vous êtes maintenant connecté avec le compte {user}."
 LOGOUT_SUCCESS = "Vous êtes maintenant déconnecté."
 
+# Games
+GAME_CREATE_SUCCESS = "Game {name} created"

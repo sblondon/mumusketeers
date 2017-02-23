@@ -21,3 +21,21 @@ class TestAdminGames(web.tests.helper.WebTestCase):
         self.assertEquals('text/html', response.content_type)
         response.mustcontain('Admin')
         response.mustcontain('No games')
+
+
+    def test_add_game(self):
+        response = self.testapp.get(web.admin.pages.Games.url, status=200)
+        response.mustcontain('No games')
+        response.form.fields['name'][0].value = ' GAMENAME '
+
+        response = response.form.submit(status=302)
+        response = response.follow(status=200)
+
+        with yzodb.connection():
+            [game] = models.games.Game.read_all()
+            self.assertEqual("GAMENAME", game.name)
+
+        response.mustcontain('GAMENAME')
+        response.mustcontain(web.strings.GAME_CREATE_SUCCESS.format(name="GAMENAME"))
+
+

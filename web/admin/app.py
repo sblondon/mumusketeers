@@ -18,6 +18,7 @@ ROUTER.add(web.admin.actions.edit_user, web.admin.forms.EditPlayer.action_regex,
 ROUTER.add(web.admin.actions.connect, web.admin.forms.ConnectAsPlayer.action_regex, 'GET')
 
 ROUTER.add(web.admin.views.games, web.admin.pages.Games.url_regex, 'GET')
+ROUTER.add(web.admin.actions.create_game, web.admin.forms.CreateGame.action_regex, web.admin.forms.CreateGame.method)
 
 def get():
     return ROUTER

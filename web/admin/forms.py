@@ -69,3 +69,15 @@ class ConnectAsPlayer(wtforms.Form):
     def make_url(cls, user):
         return cls.action+"{0}".format(user.id)   
 
+
+class CreateGame(wtforms.Form):
+    action = '/admin/game/add/'
+    action_regex = '^{0}$'.format(action)
+    method = 'POST'
+    MIN_NAME_LENGTH = 4
+
+    name = wtforms.StringField(
+            validators=[wtforms.validators.Length(min=MIN_NAME_LENGTH)],
+            filters=[web.forms.strip_filter]
+            )
+
