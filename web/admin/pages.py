@@ -61,7 +61,7 @@ class Games(AdminPage):
 
 class GameDetails(AdminPage):
     url = '/admin/games/'
-    url_regex = '^{url}(?P<uuid>{uuid})'.format(url=url, uuid=web.constantes.UUID_REGEX)
+    url_regex = '^{url}(?P<slugid>{slugid})'.format(url=url, slugid=web.constantes.SLUGID_REGEX)
     template = 'admin/game_details.html'
     _user = None
 

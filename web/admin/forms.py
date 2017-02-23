@@ -83,7 +83,7 @@ class CreateGame(wtforms.Form):
 
 class EditGame(wtforms.Form):
     action = '/admin/game/edit/'
-    action_regex = '^{0}(?P<uuid>{uuid})$'.format(action, uuid=web.constantes.UUID_REGEX)
+    action_regex = '^{0}(?P<uuid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
     method = 'POST'
     MIN_NAME_LENGTH = 4
 
