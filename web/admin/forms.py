@@ -7,7 +7,7 @@ import web.strings
 
 
 class CreatePlayer(wtforms.Form):
-    action = '/admin/player/add/'
+    action = '/admin/player/add'
     action_regex = '^{0}$'.format(action)
     method = 'POST'
     MIN_PASSWORD_LENGTH = 6
@@ -71,7 +71,7 @@ class ConnectAsPlayer(wtforms.Form):
 
 
 class CreateGame(wtforms.Form):
-    action = '/admin/game/add/'
+    action = '/admin/game/add'
     action_regex = '^{0}$'.format(action)
     method = 'POST'
     MIN_NAME_LENGTH = 4

@@ -15,7 +15,7 @@ class Home(AdminPage):
 
 
 class Players(AdminPage):
-    url = '/admin/players/'
+    url = '/admin/players'
     url_regex = '^{0}$'.format(url)
     template = 'admin/users.html'
 
@@ -56,3 +56,4 @@ class Games(AdminPage):
             games=models.games.Game.read_all(),
             games_count=models.games.Game.count(),
         )
+
