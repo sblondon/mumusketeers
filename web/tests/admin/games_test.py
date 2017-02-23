@@ -34,7 +34,7 @@ class TestAdminGames(web.tests.helper.WebTestCase):
         with yzodb.connection():
             [game] = models.games.Game.read_all()
             self.assertEqual("GAMENAME", game.name)
-
+            response.mustcontain(game.id)
         response.mustcontain('GAMENAME')
         response.mustcontain(web.strings.GAME_CREATE_SUCCESS.format(name="GAMENAME"))
 

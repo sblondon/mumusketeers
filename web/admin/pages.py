@@ -51,3 +51,8 @@ class Games(AdminPage):
     url_regex = '^{0}$'.format(url)
     template = 'admin/games.html'
 
+    def context_update(self):
+        return dict(
+            games=models.games.Game.read_all(),
+            games_count=models.games.Game.count(),
+        )
