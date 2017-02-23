@@ -63,7 +63,6 @@ class GameDetails(AdminPage):
     url = '/admin/games/'
     url_regex = '^{url}(?P<slugid>{slugid})'.format(url=url, slugid=web.constantes.SLUGID_REGEX)
     template = 'admin/game_details.html'
-    _user = None
 
     def context_update(self):
         return dict(
