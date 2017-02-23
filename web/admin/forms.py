@@ -81,3 +81,14 @@ class CreateGame(wtforms.Form):
             filters=[web.forms.strip_filter]
             )
 
+class EditGame(wtforms.Form):
+    action = '/admin/game/edit/'
+    action_regex = '^{0}(?P<uuid>{uuid})$'.format(action, uuid=web.constantes.UUID_REGEX)
+    method = 'POST'
+    MIN_NAME_LENGTH = 4
+
+    name = wtforms.StringField(
+            validators=[wtforms.validators.Length(min=MIN_NAME_LENGTH)],
+            filters=[web.forms.strip_filter]
+            )
+

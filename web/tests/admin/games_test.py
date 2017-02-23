@@ -39,3 +39,26 @@ class TestAdminGames(web.tests.helper.WebTestCase):
         response.mustcontain(web.strings.GAME_CREATE_SUCCESS.format(name="GAMENAME"))
 
 
+class TestGameDetails(web.tests.helper.WebTestCase):
+
+    def test_change_all(self):
+        with yzodb.connection():
+            models.games.create_game('GAMENAME')
+            transaction.commit()
+
+        response = self.testapp.get(web.admin.pages.Games.url, status=200)
+
+        response = response.click('Details')
+
+        self.assertEquals(response.form.fields['name'][0].value, 'GAMENAME')
+        response.form.fields['name'][0].value = 'New name'
+
+        response = response.form.submit(status=302)
+        response = response.follow(status=200)
+
+        with yzodb.connection():
+            [game] = models.games.Game.read_all()
+            self.assertEqual("New name", game.name)
+
+        response.mustcontain(web.strings.GAME_EDIT_SUCCESS.format(name="New name"))
+

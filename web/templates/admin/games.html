@@ -28,7 +28,9 @@
                     <tr>
                         <td>{{ game.id }}</td>
                         <td>{{ game.name }}</td>
-                        <td></td>
+                        <td>
+                            <a href="{{ pages.admin.GameDetails.make_url(game) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Details</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

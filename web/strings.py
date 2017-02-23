@@ -21,3 +21,4 @@ LOGOUT_SUCCESS = "Vous êtes maintenant déconnecté."
 
 # Games
 GAME_CREATE_SUCCESS = "Game {name} created"
+GAME_EDIT_SUCCESS = "Game {name} updated"

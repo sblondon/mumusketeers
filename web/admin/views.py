@@ -33,3 +33,14 @@ def games(request):
     _page.form(web.admin.forms.CreateGame())
     return ywsgi.html(_page.render())
 
+
+def game_details(request, uuid=""):
+    game = models.games.Game.read(uuid)
+    _page = web.admin.pages.GameDetails()
+    _page.game = game
+    _form = web.admin.forms.EditGame()
+    _form.name.raw_data = [game.name]
+    _form.action = _form.action + uuid
+    _page.form(_form)
+    return ywsgi.html(_page.render())
+

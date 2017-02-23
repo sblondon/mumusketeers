@@ -57,3 +57,20 @@ class Games(AdminPage):
             games_count=models.games.Game.count(),
         )
 
+
+
+class GameDetails(AdminPage):
+    url = '/admin/games/'
+    url_regex = '^{url}(?P<uuid>{uuid})'.format(url=url, uuid=web.constantes.UUID_REGEX)
+    template = 'admin/game_details.html'
+    _user = None
+
+    def context_update(self):
+        return dict(
+            game=self.game,
+        )
+
+    @classmethod
+    def make_url(cls, obj):
+        return cls.url + "{0}".format(obj.id)
+
