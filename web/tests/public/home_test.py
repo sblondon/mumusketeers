@@ -16,7 +16,7 @@ class TestHome(web.tests.helper.WebTestCase):
         response = self.testapp.get('/', status=200)
 
         self.assertEquals('text/html', response.content_type)
-        response.mustcontain('Bienvenue')
+        response.mustcontain('Ready to ghostify?')
 
 
 class Test404(web.tests.helper.WebTestCase):
