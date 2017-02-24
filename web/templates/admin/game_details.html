@@ -1,0 +1,18 @@
+{% import 'macro/form.jinja' as macros %}
+{% extends 'admin/base.html' %}
+
+
+{% block menu %}
+{{ generate_menu('games') }}
+{% endblock %}
+
+
+{% import 'macro/form.jinja' as macros %}
+{% block content %}
+
+<div class="row">
+    {% call macros.render_form(form, form_title='Edit game', action_text="Update") %}
+            {{ macros.render_field(form.name, placeholder="Insert name") }}
+    {% endcall %}
+</div>
+{% endblock %}
