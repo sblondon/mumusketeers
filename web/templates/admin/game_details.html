@@ -11,8 +11,35 @@
 {% block content %}
 
 <div class="row">
-    {% call macros.render_form(form, form_title='Edit game', action_text="Update") %}
+    {% call macros.render_form(form, form_title='Edit game', html_form_id="update_game_form", action_text="Update") %}
             {{ macros.render_field(form.name, placeholder="Insert name") }}
     {% endcall %}
 </div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Waiting players</h2>
+        {% if game.waiting_players %}
+        <ul>
+            {% for player in game.waiting_players %}
+            <li>{{ player.email }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        No waiting players
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        {% call macros.render_form(add_player_form, form_title='Add player', html_form_id="add_player_form", action_text="Add") %}
+                {{ add_player_form.game() }}
+                {{ macros.render_field(add_player_form.email, placeholder="Insert e-mail") }}
+        {% endcall %}
+    </div>
+</div>
+
+
+<div class="row">
+</div>
+
 {% endblock %}

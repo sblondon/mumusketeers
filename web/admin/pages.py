@@ -67,6 +67,7 @@ class GameDetails(AdminPage):
     def context_update(self):
         return dict(
             game=self.game,
+            add_player_form=self.add_player_form,
         )
 
     @classmethod

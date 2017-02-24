@@ -79,3 +79,17 @@ class EditGame(wtforms.Form):
             filters=[web.forms.strip_filter]
             )
 
+class AddPlayerToGame(wtforms.Form):
+    action = '/admin/game/player/add'
+    action_regex = '^{0}$'.format(action)
+    method = 'POST'
+
+    game = wtforms.HiddenField()
+    email = wtforms.StringField(
+            validators=[
+                web.forms.user_email_unique_validator,
+                web.forms.is_email_validator,
+                ],
+            filters=[web.forms.strip_filter]
+            )
+

@@ -13,4 +13,14 @@ class Game(models.Model):
     table = 'games'
 
     name = yzodb.SimpleAttribute()
+    waiting_players = yzodb.ModelSetAttribute("models.users.Player")
+
+    def add_player_email(self, email):
+        import models.users
+        try:
+            player = models.users.create(email)
+        except models.NotAllowed:
+            player = models.users.read(email)
+        self.waiting_players.add(player)
+        return player
 

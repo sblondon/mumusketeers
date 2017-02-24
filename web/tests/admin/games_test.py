@@ -50,10 +50,11 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         response = response.click('Details')
 
-        self.assertEquals(response.form.fields['name'][0].value, 'GAMENAME')
-        response.form.fields['name'][0].value = 'New name'
+        form = response.forms["update_game_form"]
+        self.assertEqual(form.fields['name'][0].value, 'GAMENAME')
+        form.fields['name'][0].value = 'New name'
 
-        response = response.form.submit(status=302)
+        response = form.submit(status=302)
         response = response.follow(status=200)
 
         with yzodb.connection():
@@ -61,4 +62,50 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             self.assertEqual("New name", game.name)
 
         response.mustcontain(web.strings.GAME_EDIT_SUCCESS.format(name="New name"))
+
+
+    def test_add_a_new_player(self):
+        with yzodb.connection():
+            game = models.games.create_game('GAMENAME')
+            transaction.commit()
+            url = web.admin.pages.GameDetails.make_url(game)
+
+        response = self.testapp.get(url, status=200)
+
+        form = response.forms["add_player_form"]
+        form.fields['email'][0].value = "player@domain.tld"
+
+        response = form.submit(status=302)
+        response = response.follow(status=200)
+
+        with yzodb.connection():
+            [game] = models.games.Game.read_all()
+            player = models.users.read("player@domain.tld")
+            self.assertIn(player, game.waiting_players)
+
+        response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
+
+    def test_add_an_existing_player(self):
+        EMAIL = 'player@domain.tld'
+        with yzodb.connection():
+            game = models.games.create_game('GAMENAME')
+            player = models.users.create(EMAIL)
+            transaction.commit()
+            url = web.admin.pages.GameDetails.make_url(game)
+
+        response = self.testapp.get(url, status=200)
+
+        form = response.forms["add_player_form"]
+        form.fields['email'][0].value = EMAIL
+
+        response = form.submit(status=302)
+        response = response.follow(status=200)
+
+        with yzodb.connection():
+            [game] = models.games.Game.read_all()
+            player = models.users.read(EMAIL)
+            self.assertIn(player, game.waiting_players)
+            self.assertEqual(1, models.users.Player.count())
+
+        response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 

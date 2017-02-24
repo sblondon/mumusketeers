@@ -116,3 +116,12 @@ def edit_game(request, slugid=""):
     _page.form(_form)
     return ywsgi.html(_page.render())
 
+
+@yzodb.commit
+def add_player_to_game(request):
+    form = web.admin.forms.AddPlayerToGame(request.form)
+    game = models.games.Game.read(form.game.data)
+    player = game.add_player_email(form.email.data)
+    web.session.add_user_success_notif(web.strings.PLAYER_ADDED_SUCCESS.format(player=player.email, game=game.name))
+    return ywsgi.redirect(web.admin.pages.GameDetails.make_url(game))
+

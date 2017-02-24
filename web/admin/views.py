@@ -42,5 +42,8 @@ def game_details(request, slugid):
     _form.name.raw_data = [game.name]
     _form.action = _form.action + slugid
     _page.form(_form)
+    add_player_form = web.admin.forms.AddPlayerToGame()
+    add_player_form.game.data = game.id
+    _page.add_player_form = add_player_form
     return ywsgi.html(_page.render())
 
