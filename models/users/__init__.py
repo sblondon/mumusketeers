@@ -1,5 +1,4 @@
 import hashlib
-import slugid
 import yzodb
 
 import models
@@ -31,16 +30,12 @@ def read(email):
 
 
 
-class Player(yzodb.Model):
+class Player(models.Model):
     table = 'players'
 
     _email = yzodb.SimpleAttribute()
     _password = yzodb.SimpleAttribute()
 
-
-    @classmethod
-    def propose_id(cls):
-        return slugid.v4().decode("ascii")
 
     def delete(self):
         Indexes.delete(self)

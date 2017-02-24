@@ -1,6 +1,8 @@
 import slugid
 import yzodb
 
+import models
+
 
 def create_game(name):
     game = Game.create()
@@ -8,13 +10,8 @@ def create_game(name):
     return game
 
 
-class Game(yzodb.Model):
+class Game(models.Model):
     table = 'games'
 
     name = yzodb.SimpleAttribute()
-
-
-    @classmethod
-    def propose_id(cls):
-        return slugid.v4().decode("ascii")
 
