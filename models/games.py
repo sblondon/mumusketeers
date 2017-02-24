@@ -18,7 +18,7 @@ class Game(models.Model):
     def add_player_email(self, email):
         import models.users
         try:
-            player = models.users.create(email)
+            player = models.users.create_player(email)
         except models.NotAllowed:
             player = models.users.read(email)
         self.waiting_players.add(player)

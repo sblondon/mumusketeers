@@ -53,7 +53,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_email_unique_error_on_add_user(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr')
+            models.users.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -76,7 +76,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_on_connect_as(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr')
+            models.users.create_player('user@yaal.fr')
             transaction.commit()
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
@@ -90,7 +90,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_delete_user(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr')
+            models.users.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -118,7 +118,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_change_all(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr')
+            models.users.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -139,7 +139,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_keep_email(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr')
+            models.users.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -157,8 +157,8 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_cannot_overwrite_other_user_email(self):
         with yzodb.connection():
-            models.users.create('previous_user@yaal.fr')
-            models.users.create('user@yaal.fr')
+            models.users.create_player('previous_user@yaal.fr')
+            models.users.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)

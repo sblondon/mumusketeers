@@ -27,7 +27,7 @@ def connect(request, slugid=""):
 def create_user(request):
     _form = web.admin.forms.CreatePlayer(request.form)
     if _form.validate():
-        _user = models.users.create(_form.email.data)
+        _user = models.users.create_player(_form.email.data)
         web.session.add_user_success_notif(web.strings.USER_CREATE_SUCCESS.format(user=_user.email))
         return ywsgi.redirect(web.admin.pages.Players.url)
     else:

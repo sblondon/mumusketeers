@@ -5,7 +5,7 @@ import web.session
 import web.users.forms
 
 
-def create(email):
+def create_player(email):
     player = read(email)
     if player:
         raise models.NotAllowed()

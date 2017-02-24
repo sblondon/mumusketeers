@@ -89,7 +89,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
         EMAIL = 'player@domain.tld'
         with yzodb.connection():
             game = models.games.create_game('GAMENAME')
-            player = models.users.create(EMAIL)
+            player = models.users.create_player(EMAIL)
             transaction.commit()
             url = web.admin.pages.GameDetails.make_url(game)
 
