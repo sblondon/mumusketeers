@@ -9,7 +9,6 @@ class Model(yzodb.Model):
         return slugid.v4().decode("ascii")
 
 
-
 class NotAllowed(Exception):
     pass
 

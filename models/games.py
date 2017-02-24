@@ -1,4 +1,3 @@
-import slugid
 import yzodb
 
 import models
