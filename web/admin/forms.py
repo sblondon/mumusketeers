@@ -29,7 +29,7 @@ class CreatePlayer(wtforms.Form):
 
 class EditPlayer(wtforms.Form):
     action = '/admin/player/edit/'
-    action_regex = '^{0}(?P<uuid>{uuid})$'.format(action, uuid=web.constantes.UUID_REGEX)
+    action_regex = '^{0}(?P<slugid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
     method = 'POST'
     MIN_PASSWORD_LENGTH = 6
 
@@ -54,7 +54,7 @@ class EditPlayer(wtforms.Form):
 
 class DeletePlayer(wtforms.Form):
     action = '/admin/player/delete/'
-    action_regex = '^{action}(?P<uuid>{uuid})$'.format(action=action, uuid=web.constantes.UUID_REGEX)
+    action_regex = '^{0}(?P<slugid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
 
     @classmethod
     def make_url(cls, user):
@@ -63,7 +63,7 @@ class DeletePlayer(wtforms.Form):
 
 class ConnectAsPlayer(wtforms.Form):
     action = '/admin/player/connect/'
-    action_regex = '^{action}(?P<uuid>{uuid})$'.format(action=action, uuid=web.constantes.UUID_REGEX)
+    action_regex = '^{0}(?P<slugid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
 
     @classmethod
     def make_url(cls, user):
@@ -83,7 +83,7 @@ class CreateGame(wtforms.Form):
 
 class EditGame(wtforms.Form):
     action = '/admin/game/edit/'
-    action_regex = '^{0}(?P<uuid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
+    action_regex = '^{0}(?P<slugid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
     method = 'POST'
     MIN_NAME_LENGTH = 4
 

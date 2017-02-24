@@ -12,9 +12,9 @@ import web.users.forms
 import web.users.pages
 
 
-def connect(request, uuid=""):
+def connect(request, slugid=""):
     try:
-        _user = models.users.Player.read(uuid)
+        _user = models.users.Player.read(slugid)
         web.session.login(_user)
         return ywsgi.redirect(web.users.pages.Home.url)
     except yzodb.ObjectNotFoundException:
@@ -38,9 +38,9 @@ def create_user(request):
 
 
 @yzodb.commit
-def delete_user(request, uuid=""):
+def delete_user(request, slugid=""):
     try:
-        _user = models.users.Player.read(uuid)
+        _user = models.users.Player.read(slugid)
         _user.delete()
         web.session.add_user_success_notif(web.strings.USER_DELETE_SUCCESS)
         return ywsgi.redirect(web.admin.pages.Players.url)
@@ -53,9 +53,9 @@ def delete_user(request, uuid=""):
 
 
 @yzodb.commit
-def edit_user(request, uuid=""):
+def edit_user(request, slugid=""):
     try:
-        _user = models.users.Player.read(uuid)
+        _user = models.users.Player.read(slugid)
         _form = web.admin.forms.EditPlayer(request.form)
         if _form.validate() or _form.email.data == _user.email:
             _user.email  = _form.email.data
@@ -67,7 +67,7 @@ def edit_user(request, uuid=""):
         else:
             web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
             _page = web.admin.pages.EditPlayer()
-            _form.action = _form.action + uuid
+            _form.action = _form.action + slugid
             _page.form(_form)
             _page.user = _user
             return ywsgi.html(_page.render())
@@ -95,9 +95,9 @@ def create_game(request):
 
 
 @yzodb.commit
-def edit_game(request, uuid=""):
+def edit_game(request, slugid=""):
     try:
-        game = models.games.Game.read(uuid)
+        game = models.games.Game.read(slugid)
         _form = web.admin.forms.EditGame(request.form)
         if _form.validate() or True:
             game.name = _form.name.data
@@ -106,7 +106,7 @@ def edit_game(request, uuid=""):
 #        else:
 #            web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
 #            _page = web.admin.pages.EditPlayer()
-#            _form.action = _form.action + uuid
+#            _form.action = _form.action + slugid
 #            _page.form(_form)
 #            _page.user = _user
 #            return ywsgi.html(_page.render())

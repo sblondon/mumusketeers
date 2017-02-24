@@ -112,7 +112,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_cannot_delete_user(self):
         class FakePlayer:
-            id = '12345678-1234-1234-1234-123456789012'
+            id = models.users.Player.propose_id()
         response = self.testapp.get(web.admin.forms.DeletePlayer.make_url(FakePlayer()), status=200)
 
         response.mustcontain('Admin')

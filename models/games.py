@@ -1,5 +1,5 @@
-import yzodb
 import slugid
+import yzodb
 
 
 def create_game(name):

@@ -28,7 +28,7 @@ class Players(AdminPage):
 
 class EditPlayer(AdminPage):
     url = '/admin/player/edit/'
-    url_regex = '^{url}(?P<uuid>{uuid})'.format(url=url, uuid=web.constantes.UUID_REGEX)
+    url_regex = '^{url}(?P<slugid>{slugid})'.format(url=url, slugid=web.constantes.SLUGID_REGEX)
     template = 'admin/edit_users.html'
     _user = None
 

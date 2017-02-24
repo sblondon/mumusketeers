@@ -17,13 +17,13 @@ def users(request):
     return ywsgi.html(_page.render())
 
 
-def edit_user(request, uuid=""):
-    _user = models.users.Player.read(uuid)
+def edit_user(request, slugid=""):
+    _user = models.users.Player.read(slugid)
     _page = web.admin.pages.EditPlayer()
     _page.user = _user
     _form = web.admin.forms.EditPlayer()
     _form.email.raw_data = [_user.email]
-    _form.action = _form.action + uuid
+    _form.action = _form.action + slugid
     _page.form(_form)
     return ywsgi.html(_page.render())
 
