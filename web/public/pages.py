@@ -7,12 +7,6 @@ class Home(web.pages.Page):
     template = 'public/index.html'
 
 
-class Login(web.pages.Page):
-    url = '/user/'
-    url_regex = '^{0}$'.format(url)
-    template = 'users/login.html'
-
-
 class NotFound(web.pages.Page):
     template = 'public/404.html'
 

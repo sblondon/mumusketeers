@@ -1,6 +1,5 @@
 import ytemplates
 
-import web.public.forms
 import web.session
 
 
@@ -42,9 +41,6 @@ class Page(ytemplates.Template):
                 },
             },
             "forms": {
-                "public": {
-                    "Login": web.public.forms.Login,
-                },
                 "admin": {
                     "ConnectAsPlayer": web.admin.forms.ConnectAsPlayer,
                     "DeletePlayer": web.admin.forms.DeletePlayer,

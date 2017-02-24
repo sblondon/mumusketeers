@@ -15,17 +15,12 @@ def create(email):
     Indexes.add(player)
     return player
 
-def authenticate(email, password):
-    player = read(email)
-    if player and player.password_equals(password):
-        return player
 
 def read(email):
     try:
         return Indexes.get(email)
     except yzodb.ObjectNotFoundException:
         return None
-
 
 
 class Player(models.Model):
