@@ -10,7 +10,6 @@ class CreatePlayer(wtforms.Form):
     action = '/admin/player/add'
     action_regex = '^{0}$'.format(action)
     method = 'POST'
-    MIN_PASSWORD_LENGTH = 6
 
     email = wtforms.StringField(
             validators=[
@@ -18,12 +17,6 @@ class CreatePlayer(wtforms.Form):
                 web.forms.is_email_validator,
                 ],
             filters=[web.forms.strip_filter]
-            )
-    password = wtforms.StringField("Modifier le mot de passe (reste inchangé si vide)",
-            validators=[wtforms.validators.Length(
-                min=MIN_PASSWORD_LENGTH,
-                message=web.strings.PASSWORD_LENGTH_ERROR.format(length=MIN_PASSWORD_LENGTH)
-                )]
             )
 
 
@@ -31,7 +24,6 @@ class EditPlayer(wtforms.Form):
     action = '/admin/player/edit/'
     action_regex = '^{0}(?P<slugid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
     method = 'POST'
-    MIN_PASSWORD_LENGTH = 6
 
     email = wtforms.StringField(
             validators=[
@@ -39,12 +31,6 @@ class EditPlayer(wtforms.Form):
                 web.forms.is_email_validator,
                 ],
             filters=[web.forms.strip_filter]
-            )
-    password = wtforms.StringField(
-            validators=[wtforms.validators.Length(
-                min=MIN_PASSWORD_LENGTH,
-                message=web.strings.PASSWORD_LENGTH_ERROR.format(length=MIN_PASSWORD_LENGTH)
-                )]
             )
 
     @classmethod
@@ -80,6 +66,7 @@ class CreateGame(wtforms.Form):
             validators=[wtforms.validators.Length(min=MIN_NAME_LENGTH)],
             filters=[web.forms.strip_filter]
             )
+
 
 class EditGame(wtforms.Form):
     action = '/admin/game/edit/'

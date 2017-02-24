@@ -40,7 +40,6 @@
     <div class="col-md-4">
         {% call macros.render_form(form, form_title='Ajouter un utilisateur', action_text='Créer') %}
             {{ macros.render_field(form.email, placeholder='Entrez l\'email') }}
-            {{ macros.render_field(form.password, placeholder='Entrez le mot de passe') }}
         {% endcall %}
     </div>
 </div>

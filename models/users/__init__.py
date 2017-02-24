@@ -1,4 +1,3 @@
-import hashlib
 import yzodb
 
 import models
@@ -6,14 +5,13 @@ import web.session
 import web.users.forms
 
 
-def create(email, password):
+def create(email):
     player = read(email)
     if player:
         raise models.NotAllowed()
 
     player = Player.create()
     player._email = email.lower()
-    player.password = password
     Indexes.add(player)
     return player
 
@@ -34,7 +32,6 @@ class Player(models.Model):
     table = 'players'
 
     _email = yzodb.SimpleAttribute()
-    _password = yzodb.SimpleAttribute()
 
 
     def delete(self):
@@ -50,21 +47,6 @@ class Player(models.Model):
         Indexes.delete(self)
         self._email = value.lower()
         Indexes.add(self)
-
-    @property
-    def password(self):
-        return self._password
-
-    @password.setter
-    def password(self, value):
-        self._password = self._hash(value)
-
-    def _hash(self, password):
-        return hashlib.sha256('#*~/_{0}|@$%=&'.format(password).encode("utf-8")).hexdigest()
-
-    def password_equals(self, other_password):
-        return self._password == self._hash(other_password)
-
 
 
 class Indexes(yzodb.Model):

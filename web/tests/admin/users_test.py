@@ -27,14 +27,13 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('Aucun utilisateur')
         response.form.fields['email'][0].value = 'user@yaal.fr '
-        response.form.fields['password'][0].value = 'password'
 
         response = response.form.submit(status=302)
         response = response.follow(status=200)
 
         with yzodb.connection():
             [_user] = models.users.Player.read_all()
-            self.assertTrue(_user.password_equals('password'))
+            self.assertTrue("user@yaal.fr", _user.email)
 
         response.mustcontain('user@yaal.fr')
         response.mustcontain(web.strings.USER_CREATE_SUCCESS.format(user="user@yaal.fr"))
@@ -44,33 +43,27 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('Aucun utilisateur')
         response.form.fields['email'][0].value = 'user@yaal'
-        response.form.fields['password'][0].value = 'pass'
 
         response = response.form.submit(status=200)
 
         self.assertEquals(response.form.fields['email'][0].value, 'user@yaal')
-        self.assertEquals(response.form.fields['password'][0].value, 'pass')
         response.mustcontain(web.strings.USER_CREATE_FAILURE)
         response.mustcontain(web.strings.EMAIL_FORMAT_ERROR)
-        response.mustcontain(web.strings.PASSWORD_LENGTH_ERROR.format(length=6))
 
 
     def test_email_unique_error_on_add_user(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr', 'password')
+            models.users.create('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
         response.form.fields['email'][0].value = 'user@yaal.fr'
-        response.form.fields['password'][0].value = 'yaal and python for ever'
 
         response = response.form.submit(status=200)
 
         self.assertEquals(response.form.fields['email'][0].value, 'user@yaal.fr')
-        self.assertEquals(response.form.fields['password'][0].value, 'yaal and python for ever')
         response.mustcontain(web.strings.USER_CREATE_FAILURE)
-        response.mustcontain(web.strings.EMAIL_UNIQUE_ERROR)
 
 
     def test_redirect_on_get_url_add_user(self):
@@ -83,7 +76,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_on_connect_as(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr', 'password')
+            models.users.create('user@yaal.fr')
             transaction.commit()
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
@@ -97,7 +90,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_delete_user(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr', 'password')
+            models.users.create('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -125,7 +118,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_change_all(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr', 'password')
+            models.users.create('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -135,20 +128,18 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
         self.assertEquals(response.form.fields['email'][0].value, 'user@yaal.fr')
         response.form.fields['email'][0].value = 'yop@yaal.fr'
-        response.form.fields['password'][0].value = 'pastag'
 
         response = response.form.submit(status=302)
         response = response.follow(status=200)
 
         with yzodb.connection():
             [_user] = models.users.Player.read_all()
-            self.assertTrue(_user.password_equals('pastag'))
 
         response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="yop@yaal.fr"))
 
     def test_keep_email(self):
         with yzodb.connection():
-            models.users.create('user@yaal.fr', 'password')
+            models.users.create('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -160,36 +151,14 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
         response = response.form.submit(status=302)
         response = response.follow(status=200)
-
-        response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="user@yaal.fr"))
-
-
-    def test_keep_password(self):
-        with yzodb.connection():
-            models.users.create('user@yaal.fr', 'password')
-            transaction.commit()
-
-        response = self.testapp.get(web.admin.pages.Players.url, status=200)
-        response.mustcontain('user@yaal.fr')
-
-        response = response.click('Modifier')
-
-        self.assertEquals(response.form.fields['email'][0].value, 'user@yaal.fr')
-
-        response = response.form.submit(status=302)
-        response = response.follow(status=200)
-
-        with yzodb.connection():
-            [_user] = models.users.Player.read_all()
-            self.assertTrue(_user.password_equals('password'))
 
         response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="user@yaal.fr"))
 
 
     def test_cannot_overwrite_other_user_email(self):
         with yzodb.connection():
-            models.users.create('previous_user@yaal.fr', 'password')
-            models.users.create('user@yaal.fr', 'password')
+            models.users.create('previous_user@yaal.fr')
+            models.users.create('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)

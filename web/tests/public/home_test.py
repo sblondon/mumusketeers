@@ -19,40 +19,6 @@ class TestHome(web.tests.helper.WebTestCase):
         response.mustcontain('Bienvenue')
 
 
-class TestMotDePasseOublie(web.tests.helper.WebTestCase):
-
-    def test(self):
-        with yzodb.connection():
-             self.user = models.users.create("user@yopmail.fr", "motdepasse")
-             old_encrypted_password = self.user.password
-             transaction.commit()
-
-        self.testapp.post(
-                web.public.forms.GetNewPassword.action,
-                {"email": 'user@yopmail.fr'},
-                status=200)
-
-        with yzodb.connection():
-             updated_user = models.users.read("user@yopmail.fr")
-             self.assertNotEqual(updated_user.password, old_encrypted_password)
-
-    def test_ne_rien_signaler_si_le_compte_n_existe_pas(self):
-        self.testapp.post(
-                web.public.forms.GetNewPassword.action,
-                {"email": 'user@yopmail.fr'},
-                status=200)
-
-    def test_erreur_si_n_est_pas_un_email(self):
-        response = self.testapp.post(
-                web.public.forms.GetNewPassword.action,
-                {"email": 'user'},
-                status=400)
-
-        self.assertEqual(
-            {"email": ['Invalid email address.']},
-            response.json["errors"])
-
-
 class Test404(web.tests.helper.WebTestCase):
 
     def test(self):
