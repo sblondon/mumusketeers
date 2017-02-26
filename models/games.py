@@ -47,3 +47,18 @@ class Game(models.Model):
             player.current_target = targetting[player]["current target"]
             player.targetted_by_player = targetting[player]["targetted_by_player"]
 
+    @property
+    def players_loop(self):
+        first_player = list(self.playing_players)[0]
+        loop = [first_player]
+        run_loop = True
+        first_loop = True
+        player = first_player.current_target
+        while run_loop:
+            loop.append(player)
+            if player == first_player and first_loop == False:
+                run_loop = False
+            else:
+                first_loop = False
+                player = player.current_target
+        return loop

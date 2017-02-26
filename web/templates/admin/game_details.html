@@ -59,6 +59,12 @@
        <li>{{ player.targetted_by_player.email }} → <strong>{{ player.email }}</strong> → {{ player.current_target.email }} </li>
        {% endfor %}
    </ul>
+
+   <p>
+        {% for player in game.players_loop %}
+        {{ player.email }} {% if not loop.last %}→{% endif %}
+        {% endfor %}
+    </p>
    {% else %}
    No players currently playing
    {% endif %}

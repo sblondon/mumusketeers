@@ -151,6 +151,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
                 targetted_by_players.add(player.targetted_by_player)
             self.assertEqual({player_A, player_B, player_C, player_D}, current_targets)
             self.assertEqual({player_A, player_B, player_C, player_D}, targetted_by_players)
+            self.assertEqual({player_A, player_B, player_C, player_D}, set(game.players_loop))
 
         response.mustcontain(web.strings.GAME_STARTED_SUCCESS)
 
