@@ -39,6 +39,18 @@ class TestAdminGames(web.tests.helper.WebTestCase):
         response.mustcontain(web.strings.GAME_CREATE_SUCCESS.format(name="GAMENAME"))
 
 
+    def test_add_game_error(self):
+        response = self.testapp.get(web.admin.pages.Games.url, status=200)
+        response.mustcontain('No games')
+        response.form.fields['name'][0].value = 'A' * (web.admin.forms.CreateGame.MIN_NAME_LENGTH - 1)
+
+        response = response.form.submit(status=200)
+
+        with yzodb.connection():
+            self.assertEqual(0, models.games.Game.count())
+        response.mustcontain(web.strings.GAME_CREATE_FAILURE)
+
+
 class TestGameDetails(web.tests.helper.WebTestCase):
 
     def test_change_all(self):

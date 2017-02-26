@@ -86,9 +86,9 @@ def create_game(request):
         web.session.add_user_success_notif(web.strings.GAME_CREATE_SUCCESS.format(name=game.name))
         return ywsgi.redirect(web.admin.pages.Games.url)
     else:
-        _page = web.admin.pages.Players()
-        _page.form(_form)
-        web.session.add_user_error_notif(web.strings.USER_CREATE_FAILURE)
+        _page = web.admin.pages.Games()
+        _page.form(form)
+        web.session.add_user_error_notif(web.strings.GAME_CREATE_FAILURE)
         return ywsgi.html(_page.render())
 
 

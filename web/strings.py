@@ -21,6 +21,7 @@ LOGOUT_SUCCESS = "Vous êtes maintenant déconnecté."
 
 # Games
 GAME_CREATE_SUCCESS = "Game {name} created"
+GAME_CREATE_FAILURE = "Error: game cannot be created"
 GAME_EDIT_SUCCESS = "Game {name} updated"
 PLAYER_ADDED_SUCCESS = "Player {player} added to Game {game}"
 GAME_STARTED_SUCCESS = "Game starts now"
