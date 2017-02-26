@@ -125,3 +125,11 @@ def add_player_to_game(request):
     web.session.add_user_success_notif(web.strings.PLAYER_ADDED_SUCCESS.format(player=player.email, game=game.name))
     return ywsgi.redirect(web.admin.pages.GameDetails.make_url(game))
 
+
+@yzodb.commit
+def start_game(request, slugid):
+    game = models.games.Game.read(slugid)
+    game.start()
+    web.session.add_user_success_notif(web.strings.GAME_STARTED_SUCCESS)
+    return ywsgi.redirect(web.admin.pages.GameDetails.make_url(game))
+

@@ -14,6 +14,7 @@ class Game(models.Model):
 
     name = yzodb.SimpleAttribute()
     waiting_players = yzodb.ModelSetAttribute("models.users.Player")
+    playing_players = yzodb.ModelSetAttribute("models.users.Player")
 
     def add_player_email(self, email):
         import models.users
@@ -24,3 +25,7 @@ class Game(models.Model):
         self.waiting_players.add(player)
         return player
 
+    def start(self):
+        for waiting_player in list(self.waiting_players):
+            self.waiting_players.remove(waiting_player)
+            self.playing_players.add(waiting_player)

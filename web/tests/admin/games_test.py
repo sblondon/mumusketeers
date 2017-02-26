@@ -109,3 +109,25 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
+
+    def test_start_game(self):
+        with yzodb.connection():
+            game = models.games.create_game('GAMENAME')
+            player_A = game.add_player_email("A@domain.tld")
+            player_B = game.add_player_email("B@domain.tld")
+            player_C = game.add_player_email("C@domain.tld")
+            player_D = game.add_player_email("D@domain.tld")
+            transaction.commit()
+            url = web.admin.pages.GameDetails.make_url(game)
+        response = self.testapp.get(url, status=200)
+
+        response = response.click('Start game')
+        response = response.follow(status=200)
+
+        with yzodb.connection():
+            [game] = models.games.Game.read_all()
+            self.assertEqual(set(), set(game.waiting_players))
+            self.assertEqual({player_A, player_B, player_C, player_D}, set(game.playing_players))
+
+        response.mustcontain(web.strings.GAME_STARTED_SUCCESS)
+

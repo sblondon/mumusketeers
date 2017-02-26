@@ -45,6 +45,7 @@ class Page(ytemplates.Template):
                     "ConnectAsPlayer": web.admin.forms.ConnectAsPlayer,
                     "DeletePlayer": web.admin.forms.DeletePlayer,
                     "EditPlayer": web.admin.forms.EditPlayer,
+                    "StartGame": web.admin.forms.StartGame,
                 },
             },
         }

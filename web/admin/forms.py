@@ -44,7 +44,7 @@ class DeletePlayer(wtforms.Form):
 
     @classmethod
     def make_url(cls, user):
-        return cls.action+"{0}".format(user.id)   
+        return cls.action+"{0}".format(user.id)
 
 
 class ConnectAsPlayer(wtforms.Form):
@@ -92,4 +92,13 @@ class AddPlayerToGame(wtforms.Form):
                 ],
             filters=[web.forms.strip_filter]
             )
+
+
+class StartGame(wtforms.Form):
+    action = '/admin/game/start'
+    action_regex = '^{0}(?P<slugid>{slugid})$'.format(action, slugid=web.constantes.SLUGID_REGEX)
+
+    @classmethod
+    def make_url(cls, obj):
+        return cls.action+"{0}".format(obj.id)
 
