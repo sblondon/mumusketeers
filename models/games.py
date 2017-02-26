@@ -41,7 +41,7 @@ class Game(models.Model):
             else:
                 targetting[player] = {"current target": players[index + 1], "targetted_by_player": players[index - 1]}
 
-        for player in list(self.waiting_players):
+        for player in players:
             self.waiting_players.remove(player)
             self.playing_players.add(player)
             player.current_target = targetting[player]["current target"]
