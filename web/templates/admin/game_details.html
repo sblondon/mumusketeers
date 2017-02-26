@@ -12,7 +12,14 @@
 
 <div class="row">
     <div class="col-md-8">
-        <a href="{{ forms.admin.StartGame.make_url(game) }}" class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-fire"></span> Start game</a>
+        <dl>
+            <dt>Creation date</dt>
+            <dd>{{ game.creation_datetime().strftime("%Y-%m-%d %H:%M") }}</dd>
+            <dt>Action</dt>
+            <dd>
+                <a href="{{ forms.admin.StartGame.make_url(game) }}" class="btn btn-warning"><span class="glyphicon glyphicon-fire"></span> Start game</a>
+            </dd>
+        </dl>
     </div>
 
     <div class="col-md-4">
@@ -24,7 +31,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h2>Waiting players</h2>
+        <h2>{{ game.waiting_players | length }} waiting players</h2>
         {% if game.waiting_players %}
         <ul>
             {% for player in game.waiting_players %}
@@ -45,7 +52,7 @@
 
 
 <div class="row">
-   <h2>Playing players</h2>
+   <h2>{{ game.playing_players | length }} players currently in game</h2>
    {% if game.playing_players %}
    <ul>
        {% for player in game.playing_players %}
