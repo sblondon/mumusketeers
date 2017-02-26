@@ -1,3 +1,5 @@
+import random
+
 import yzodb
 
 import models
@@ -26,6 +28,22 @@ class Game(models.Model):
         return player
 
     def start(self):
-        for waiting_player in list(self.waiting_players):
-            self.waiting_players.remove(waiting_player)
-            self.playing_players.add(waiting_player)
+        players = list(self.waiting_players)
+        random.shuffle(players)
+        targetting  = {}
+        for index, player in enumerate(players):
+            if index == 0:
+                first_player = player
+                targetting[player] = {"current target": players[index + 1]}
+            elif index == len(players) - 1:
+                targetting[player] = {"current target": first_player, "targetted_by_player": players[index - 1]}
+                targetting[first_player].update({"targetted_by_player": player})
+            else:
+                targetting[player] = {"current target": players[index + 1], "targetted_by_player": players[index - 1]}
+
+        for player in list(self.waiting_players):
+            self.waiting_players.remove(player)
+            self.playing_players.add(player)
+            player.current_target = targetting[player]["current target"]
+            player.targetted_by_player = targetting[player]["targetted_by_player"]
+

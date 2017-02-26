@@ -128,6 +128,17 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             [game] = models.games.Game.read_all()
             self.assertEqual(set(), set(game.waiting_players))
             self.assertEqual({player_A, player_B, player_C, player_D}, set(game.playing_players))
+            current_targets = set()
+            targetted_by_players = set()
+            for player in game.playing_players:
+                self.assertIn(player.current_target, game.playing_players)
+                self.assertNotEqual(player.current_target, player)
+                current_targets.add(player.current_target)
+                self.assertIn(player.targetted_by_player, game.playing_players)
+                self.assertNotEqual(player.targetted_by_player, player)
+                targetted_by_players.add(player.targetted_by_player)
+            self.assertEqual({player_A, player_B, player_C, player_D}, current_targets)
+            self.assertEqual({player_A, player_B, player_C, player_D}, targetted_by_players)
 
         response.mustcontain(web.strings.GAME_STARTED_SUCCESS)
 

@@ -27,6 +27,8 @@ class Player(models.Model):
     table = 'players'
 
     _email = yzodb.SimpleAttribute()
+    current_target = yzodb.ModelAttribute("models.users.Player")
+    targetted_by_player = yzodb.ModelAttribute("models.users.Player")
 
 
     def delete(self):
