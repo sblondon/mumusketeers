@@ -56,7 +56,7 @@
    {% if game.playing_players %}
    <ul>
        {% for player in game.playing_players %}
-       <li>{{ player.email }}</li>
+       <li>{{ player.targetted_by_player.email }} → <strong>{{ player.email }}</strong> → {{ player.current_target.email }} </li>
        {% endfor %}
    </ul>
    {% else %}
