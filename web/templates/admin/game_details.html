@@ -15,10 +15,22 @@
         <dl>
             <dt>Creation date</dt>
             <dd>{{ game.creation_datetime().strftime("%Y-%m-%d %H:%M") }}</dd>
+            <dt>Status</dt>
+            <dd>
+            {% if game.preparing %}
+                Preparing
+            {% elif game.running %}
+                Running
+            {% else %}
+                Unknown
+            {% endif %}
+
+            {% if game.preparing %}
             <dt>Action</dt>
             <dd>
                 <a href="{{ forms.admin.StartGame.make_url(game) }}" class="btn btn-warning"><span class="glyphicon glyphicon-fire"></span> Start game</a>
             </dd>
+            {% endif %}
         </dl>
     </div>
 

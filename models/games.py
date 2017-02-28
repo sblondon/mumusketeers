@@ -11,12 +11,16 @@ def create_game(name):
     return game
 
 
+_PREPAPRING_STATUS = 0
+_RUNNING_STATUS = 1
+
 class Game(models.Model):
     table = 'games'
 
     name = yzodb.SimpleAttribute()
     waiting_players = yzodb.ModelSetAttribute("models.users.Player")
     playing_players = yzodb.ModelSetAttribute("models.users.Player")
+    _status = yzodb.SimpleAttribute(default=_PREPAPRING_STATUS)
 
     def add_player_email(self, email):
         import models.users
@@ -28,6 +32,7 @@ class Game(models.Model):
         return player
 
     def start(self):
+        self._status = 1
         players = list(self.waiting_players)
         random.shuffle(players)
         targetting  = {}
@@ -62,3 +67,12 @@ class Game(models.Model):
                 first_loop = False
                 player = player.current_target
         return loop
+
+    @property
+    def preparing(self):
+        return not self._status
+
+    @property
+    def running(self):
+        return self._status == _RUNNING_STATUS
+

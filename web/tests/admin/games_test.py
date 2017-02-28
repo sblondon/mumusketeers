@@ -131,6 +131,8 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             player_D = game.add_player_email("D@domain.tld")
             transaction.commit()
             url = web.admin.pages.GameDetails.make_url(game)
+            self.assertTrue(game.preparing)
+            self.assertFalse(game.running)
         response = self.testapp.get(url, status=200)
 
         response = response.click('Start game')
@@ -138,6 +140,8 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [game] = models.games.Game.read_all()
+            self.assertFalse(game.preparing)
+            self.assertTrue(game.running)
             self.assertEqual(set(), set(game.waiting_players))
             self.assertEqual({player_A, player_B, player_C, player_D}, set(game.playing_players))
             current_targets = set()
@@ -154,4 +158,5 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             self.assertEqual({player_A, player_B, player_C, player_D}, set(game.players_loop))
 
         response.mustcontain(web.strings.GAME_STARTED_SUCCESS)
+        response.mustcontain(no=['Start game'])
 
