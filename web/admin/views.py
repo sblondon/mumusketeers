@@ -7,43 +7,43 @@ import web.admin.forms
 
 
 def home(request):
-    _page = web.admin.pages.Home()
-    return ywsgi.html(_page.render())
+    page = web.admin.pages.Home()
+    return ywsgi.html(page.render())
 
 
 def users(request):
-    _page = web.admin.pages.Players()
-    _page.form(web.admin.forms.CreatePlayer())
-    return ywsgi.html(_page.render())
+    page = web.admin.pages.Players()
+    page.form(web.admin.forms.CreatePlayer())
+    return ywsgi.html(page.render())
 
 
 def edit_user(request, slugid=""):
-    _user = models.users.Player.read(slugid)
-    _page = web.admin.pages.EditPlayer()
-    _page.user = _user
-    _form = web.admin.forms.EditPlayer()
-    _form.email.raw_data = [_user.email]
-    _form.action = _form.action + slugid
-    _page.form(_form)
-    return ywsgi.html(_page.render())
+    player = models.users.Player.read(slugid)
+    page = web.admin.pages.EditPlayer()
+    page.user = player
+    form = web.admin.forms.EditPlayer()
+    form.email.raw_data = [player.email]
+    form.action = form.action + slugid
+    page.form(form)
+    return ywsgi.html(page.render())
 
 
 def games(request):
-    _page = web.admin.pages.Games()
-    _page.form(web.admin.forms.CreateGame())
-    return ywsgi.html(_page.render())
+    page = web.admin.pages.Games()
+    page.form(web.admin.forms.CreateGame())
+    return ywsgi.html(page.render())
 
 
 def game_details(request, slugid):
     game = models.games.Game.read(slugid)
-    _page = web.admin.pages.GameDetails()
-    _page.game = game
-    _form = web.admin.forms.EditGame()
-    _form.name.raw_data = [game.name]
-    _form.action = _form.action + slugid
-    _page.form(_form)
+    page = web.admin.pages.GameDetails()
+    page.game = game
+    form = web.admin.forms.EditGame()
+    form.name.raw_data = [game.name]
+    form.action = form.action + slugid
+    page.form(form)
     add_player_form = web.admin.forms.AddPlayerToGame()
     add_player_form.game.data = game.id
-    _page.add_player_form = add_player_form
-    return ywsgi.html(_page.render())
+    page.add_player_form = add_player_form
+    return ywsgi.html(page.render())
 
