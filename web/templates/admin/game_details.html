@@ -68,7 +68,7 @@
    {% if game.playing_players %}
    <ul>
        {% for player in game.playing_players %}
-       <li>{{ player.targetted_by_player.email }} → <strong>{{ player.email }}</strong> → {{ player.current_target.email }} </li>
+       <li>{{ player.targetted_by_player_for_game(game).email }} → <strong>{{ player.email }}</strong> → {{ player.current_target_for_game(game).email }} </li>
        {% endfor %}
    </ul>
 

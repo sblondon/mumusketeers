@@ -27,9 +27,8 @@ class Player(models.Model):
     table = 'players'
 
     _email = yzodb.SimpleAttribute()
-    current_target = yzodb.ModelAttribute("models.users.Player")
-    targetted_by_player = yzodb.ModelAttribute("models.users.Player")
-
+    _current_targets = yzodb.ModelDictAttribute("models.users.Player")
+    _targetted_by_players = yzodb.ModelDictAttribute("models.users.Player")
 
     def delete(self):
         Indexes.delete(self)
@@ -44,6 +43,18 @@ class Player(models.Model):
         Indexes.delete(self)
         self._email = value.lower()
         Indexes.add(self)
+
+    def add_current_target_for_game(self, player, game):
+        self._current_targets[game.id] = player
+
+    def add_targetted_by_player_for_game(self, player, game):
+        self._targetted_by_players[game.id] = player
+
+    def current_target_for_game(self, game):
+        return self._current_targets[game.id]
+
+    def targetted_by_player_for_game(self, game):
+        return self._targetted_by_players[game.id]
 
 
 class Indexes(yzodb.Model):

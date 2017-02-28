@@ -49,8 +49,8 @@ class Game(models.Model):
         for player in players:
             self.waiting_players.remove(player)
             self.playing_players.add(player)
-            player.current_target = targetting[player]["current target"]
-            player.targetted_by_player = targetting[player]["targetted_by_player"]
+            player.add_current_target_for_game(targetting[player]["current target"], self)
+            player.add_targetted_by_player_for_game(targetting[player]["targetted_by_player"], self)
 
     @property
     def players_loop(self):
@@ -58,14 +58,14 @@ class Game(models.Model):
         loop = [first_player]
         run_loop = True
         first_loop = True
-        player = first_player.current_target
+        player = first_player.current_target_for_game(self)
         while run_loop:
             loop.append(player)
             if player == first_player and first_loop == False:
                 run_loop = False
             else:
                 first_loop = False
-                player = player.current_target
+                player = player.current_target_for_game(self)
         return loop
 
     @property
