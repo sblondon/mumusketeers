@@ -1,7 +1,7 @@
 import re
 import wtforms
 
-import models.users
+import models.players
 import web.strings
 
 
@@ -11,7 +11,7 @@ def strip_filter(string):
 
 
 def user_email_unique_validator(form, field):
-    if models.users.read(field.data):
+    if models.players.read(field.data):
         raise wtforms.ValidationError(web.strings.EMAIL_UNIQUE_ERROR)
 
 

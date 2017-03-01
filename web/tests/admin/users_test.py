@@ -5,7 +5,7 @@ import web.tests.helper
 
 import yzodb
 
-import models.users
+import models.players
 import web.strings
 import web.admin.pages
 import web.admin.forms
@@ -32,7 +32,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = response.follow(status=200)
 
         with yzodb.connection():
-            [_user] = models.users.Player.read_all()
+            [_user] = models.players.Player.read_all()
             self.assertTrue("user@yaal.fr", _user.email)
 
         response.mustcontain('user@yaal.fr')
@@ -53,7 +53,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_email_unique_error_on_add_user(self):
         with yzodb.connection():
-            models.users.create_player('user@yaal.fr')
+            models.players.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -76,7 +76,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_on_connect_as(self):
         with yzodb.connection():
-            models.users.create_player('user@yaal.fr')
+            models.players.create_player('user@yaal.fr')
             transaction.commit()
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
@@ -90,7 +90,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_delete_user(self):
         with yzodb.connection():
-            models.users.create_player('user@yaal.fr')
+            models.players.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -105,7 +105,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_cannot_delete_user(self):
         class FakePlayer:
-            id = models.users.Player.propose_id()
+            id = models.players.Player.propose_id()
         response = self.testapp.get(web.admin.forms.DeletePlayer.make_url(FakePlayer()), status=200)
 
         response.mustcontain('Admin')
@@ -118,7 +118,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_change_all(self):
         with yzodb.connection():
-            models.users.create_player('user@yaal.fr')
+            models.players.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -133,13 +133,13 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
         response = response.follow(status=200)
 
         with yzodb.connection():
-            [_user] = models.users.Player.read_all()
+            [_user] = models.players.Player.read_all()
 
         response.mustcontain(web.strings.USER_EDIT_SUCCESS.format(user="yop@yaal.fr"))
 
     def test_keep_email(self):
         with yzodb.connection():
-            models.users.create_player('user@yaal.fr')
+            models.players.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
@@ -157,15 +157,15 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
     def test_cannot_overwrite_other_user_email(self):
         with yzodb.connection():
-            models.users.create_player('previous_user@yaal.fr')
-            models.users.create_player('user@yaal.fr')
+            models.players.create_player('previous_user@yaal.fr')
+            models.players.create_player('user@yaal.fr')
             transaction.commit()
 
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
         with yzodb.connection():
-            _user = models.users.read("user@yaal.fr")
+            _user = models.players.read("user@yaal.fr")
         response = response.click('Modifier', href=_user.id)
         response.form.fields['email'][0].value = 'previous_user@yaal.fr'
 

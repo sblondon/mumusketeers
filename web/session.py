@@ -1,6 +1,6 @@
 import ysessions
 
-import models.users
+import models.players
 
 
 USER_NOTIFS_KEY = 'user_notifs'
@@ -49,7 +49,7 @@ def login(user):
 
 def user():
     try:
-        return models.users.Player.read(get()[USER_ID_KEY])
+        return models.players.Player.read(get()[USER_ID_KEY])
     except KeyError:
         logout()
 

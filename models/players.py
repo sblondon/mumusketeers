@@ -27,8 +27,8 @@ class Player(models.Model):
     table = 'players'
 
     _email = yzodb.SimpleAttribute()
-    _current_targets = yzodb.ModelDictAttribute("models.users.Player")
-    _targetted_by_players = yzodb.ModelDictAttribute("models.users.Player")
+    _current_targets = yzodb.ModelDictAttribute("models.players.Player")
+    _targetted_by_players = yzodb.ModelDictAttribute("models.players.Player")
 
     def delete(self):
         Indexes.delete(self)

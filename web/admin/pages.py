@@ -1,4 +1,4 @@
-import models.users
+import models.players
 
 import web.constantes
 import web.pages
@@ -21,8 +21,8 @@ class Players(AdminPage):
 
     def context_update(self):
         return dict(
-            users=models.users.Player.read_all(),
-            users_count=models.users.Player.count(),
+            users=models.players.Player.read_all(),
+            users_count=models.players.Player.count(),
         )
 
 

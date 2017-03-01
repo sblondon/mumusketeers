@@ -1,6 +1,6 @@
 import ywsgi
 
-import models.users
+import models.players
 
 import web.admin.pages
 import web.admin.forms
@@ -18,7 +18,7 @@ def users(request):
 
 
 def edit_user(request, slugid=""):
-    player = models.users.Player.read(slugid)
+    player = models.players.Player.read(slugid)
     page = web.admin.pages.EditPlayer()
     page.user = player
     form = web.admin.forms.EditPlayer()

@@ -18,16 +18,16 @@ class Game(models.Model):
     table = 'games'
 
     name = yzodb.SimpleAttribute()
-    waiting_players = yzodb.ModelSetAttribute("models.users.Player")
-    playing_players = yzodb.ModelSetAttribute("models.users.Player")
+    waiting_players = yzodb.ModelSetAttribute("models.players.Player")
+    playing_players = yzodb.ModelSetAttribute("models.players.Player")
     _status = yzodb.SimpleAttribute(default=_PREPAPRING_STATUS)
 
     def add_player_email(self, email):
-        import models.users
+        import models.players
         try:
-            player = models.users.create_player(email)
+            player = models.players.create_player(email)
         except models.NotAllowed:
-            player = models.users.read(email)
+            player = models.players.read(email)
         self.waiting_players.add(player)
         return player
 

@@ -3,7 +3,7 @@ import ywsgi
 import yzodb
 
 import models.games
-import models.users
+import models.players
 import web.admin.pages
 import web.admin.forms
 import web.session
@@ -14,7 +14,7 @@ import web.users.pages
 
 def connect(request, slugid=""):
     try:
-        _user = models.users.Player.read(slugid)
+        _user = models.players.Player.read(slugid)
         web.session.login(_user)
         return ywsgi.redirect(web.users.pages.Home.url)
     except yzodb.ObjectNotFoundException:
@@ -27,7 +27,7 @@ def connect(request, slugid=""):
 def create_user(request):
     _form = web.admin.forms.CreatePlayer(request.form)
     if _form.validate():
-        _user = models.users.create_player(_form.email.data)
+        _user = models.players.create_player(_form.email.data)
         web.session.add_user_success_notif(web.strings.USER_CREATE_SUCCESS.format(user=_user.email))
         return ywsgi.redirect(web.admin.pages.Players.url)
     else:
@@ -40,7 +40,7 @@ def create_user(request):
 @yzodb.commit
 def delete_user(request, slugid=""):
     try:
-        _user = models.users.Player.read(slugid)
+        _user = models.players.Player.read(slugid)
         _user.delete()
         web.session.add_user_success_notif(web.strings.USER_DELETE_SUCCESS)
         return ywsgi.redirect(web.admin.pages.Players.url)
@@ -55,7 +55,7 @@ def delete_user(request, slugid=""):
 @yzodb.commit
 def edit_user(request, slugid=""):
     try:
-        _user = models.users.Player.read(slugid)
+        _user = models.players.Player.read(slugid)
         _form = web.admin.forms.EditPlayer(request.form)
         if _form.validate() or _form.email.data == _user.email:
             _user.email  = _form.email.data

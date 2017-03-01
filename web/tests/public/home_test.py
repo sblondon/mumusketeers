@@ -4,7 +4,7 @@ import transaction
 import werkzeug.exceptions
 import webtest
 
-import models.users
+import models.players
 import web.application
 import web.tests.helper
 import yzodb

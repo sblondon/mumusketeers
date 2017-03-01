@@ -1,20 +1,20 @@
 import yzodb
-import models.users
+import models.players
 
 
 class TestCreate(yzodb.ConnectedTestCase):
 
     def test(self):
-        models.users.create_player('User@yaal.fr')
+        models.players.create_player('User@yaal.fr')
 
-        self.assertTrue(models.users.read("user@yaal.fr"))
-        self.assertTrue(models.users.read("uSER@yaal.fr"))
+        self.assertTrue(models.players.read("user@yaal.fr"))
+        self.assertTrue(models.players.read("uSER@yaal.fr"))
 
     def test_once_is_enough(self):
-        models.users.create_player('User@yaal.fr')
+        models.players.create_player('User@yaal.fr')
 
         try:
-            models.users.create_player('User@yaal.fr')
+            models.players.create_player('User@yaal.fr')
             self.fail("once is enough")
         except models.NotAllowed:
             pass
@@ -23,9 +23,9 @@ class TestCreate(yzodb.ConnectedTestCase):
 class TestChangeEmail(yzodb.ConnectedTestCase):
 
     def test(self):
-        player = models.users.create_player('User@yaal.fr')
+        player = models.players.create_player('User@yaal.fr')
         player.email = "UPDATE@yaal.fr"
-        self.assertFalse(models.users.read("user@yaal.fr"))
-        self.assertTrue(models.users.read("update@yaal.fr"))
+        self.assertFalse(models.players.read("user@yaal.fr"))
+        self.assertTrue(models.players.read("update@yaal.fr"))
 
 

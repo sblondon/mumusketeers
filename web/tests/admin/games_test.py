@@ -5,7 +5,7 @@ import web.tests.helper
 
 import yzodb
 
-import models.users
+import models.players
 import web.strings
 import web.admin.pages
 import web.admin.forms
@@ -92,7 +92,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [game] = models.games.Game.read_all()
-            player = models.users.read("player@domain.tld")
+            player = models.players.read("player@domain.tld")
             self.assertIn(player, game.waiting_players)
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
@@ -101,7 +101,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
         EMAIL = 'player@domain.tld'
         with yzodb.connection():
             game = models.games.create_game('GAMENAME')
-            player = models.users.create_player(EMAIL)
+            player = models.players.create_player(EMAIL)
             transaction.commit()
             url = web.admin.pages.GameDetails.make_url(game)
 
@@ -115,9 +115,9 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [game] = models.games.Game.read_all()
-            player = models.users.read(EMAIL)
+            player = models.players.read(EMAIL)
             self.assertIn(player, game.waiting_players)
-            self.assertEqual(1, models.users.Player.count())
+            self.assertEqual(1, models.players.Player.count())
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
