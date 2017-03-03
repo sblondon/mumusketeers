@@ -9,8 +9,8 @@ class AdminPage(web.pages.Page):
 
 
 class Home(AdminPage):
-    url = '/admin/'
-    url_regex = '^{0}?$'.format(url)
+    url = '/admin'
+    url_regex = '^{0}/?$'.format(url)
     template = 'admin/index.html'
 
 

@@ -35,6 +35,7 @@ class Page(ytemplates.Template):
         return {
             "pages": {
                 "admin": {
+                    "Home": web.admin.pages.Home,
                     "Players": web.admin.pages.Players,
                     "Games": web.admin.pages.Games,
                     "GameDetails": web.admin.pages.GameDetails,
