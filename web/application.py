@@ -13,7 +13,7 @@ import yzodb
 import web.settings
 import web.public.app
 import web.admin.app
-import web.users.app
+import web.players.app
 import web.filters
 import web.middlewares
 
@@ -27,7 +27,7 @@ class YApp(object):
         self._apps = (
                 web.public.app.get(),
                 web.admin.app.get(),
-                web.users.app.get(),
+                web.players.app.get(),
             )
 
     def __call__(self, request):

@@ -8,15 +8,15 @@ import web.admin.pages
 import web.admin.forms
 import web.session
 import web.strings
-import web.users.forms
-import web.users.pages
+import web.players.forms
+import web.players.pages
 
 
 def connect(request, slugid=""):
     try:
         player = models.players.Player.read(slugid)
         web.session.login(player)
-        return ywsgi.redirect(web.users.pages.Home.url)
+        return ywsgi.redirect(web.players.pages.Home.url)
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.LOGIN_ERROR)
     page = web.admin.pages.Players()

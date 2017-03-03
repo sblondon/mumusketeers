@@ -7,7 +7,7 @@ import shutil
 import yzodb
 
 import web.application
-import web.users.forms
+import web.players.forms
 import web.settings
 
 
@@ -32,7 +32,7 @@ class LoggedUserWebTestCase(WebTestCase):
     def setUp(self):
         super(LoggedUserWebTestCase, self).setUp()
         self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
-        self.testapp.post(web.users.forms.Login.action, dict(email='user@yaal.fr', password='password'))
+        self.testapp.post(web.players.forms.Login.action, dict(email='user@yaal.fr', password='password'))
 
 
 def create_spoof_datetime():

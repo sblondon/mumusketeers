@@ -1,7 +1,7 @@
 import ywsgi
 
-import web.users.forms
-import web.users.pages
+import web.players.forms
+import web.players.pages
 import web.session
 import web.admin.pages
 import web.public.pages

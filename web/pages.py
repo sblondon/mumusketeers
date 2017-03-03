@@ -31,7 +31,7 @@ class Page(ytemplates.Template):
 
     @classmethod
     def _static_context(self):
-        import web.users.forms
+        import web.players.forms
         return {
             "pages": {
                 "admin": {

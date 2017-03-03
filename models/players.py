@@ -2,7 +2,7 @@ import yzodb
 
 import models
 import web.session
-import web.users.forms
+import web.players.forms
 
 
 def create_player(email):
