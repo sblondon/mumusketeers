@@ -35,10 +35,10 @@ def add_user_error_notif(message):
     add_user_notif(message, UserNotif.ERROR)
 
 def add_user_notif(message, level):
-    _session = get()
-    _user_notifs = _session.setdefault(USER_NOTIFS_KEY, [])
-    _user_notif = UserNotif(message, level)
-    _user_notifs.append(_user_notif)
+    session = get()
+    user_notifs = session.setdefault(USER_NOTIFS_KEY, [])
+    user_notif = UserNotif(message, level)
+    user_notifs.append(user_notif)
 
 def pop_user_notifs():
     return get().pop(USER_NOTIFS_KEY, [])
@@ -63,18 +63,18 @@ def logout():
         pass
 
 def temporary_image():
-    _session = get()
+    session = get()
     try:
-        return _session[TEMP_IMG_KEY]
+        return session[TEMP_IMG_KEY]
     except KeyError:
         return
 
 def save_temporary_image(image):
-    _session = get()
-    _session[TEMP_IMG_KEY] = image
+    session = get()
+    session[TEMP_IMG_KEY] = image
 
 def clean_temporary_image():
-    _session = get()
-    if TEMP_IMG_KEY in _session:
-        del _session[TEMP_IMG_KEY]
+    session = get()
+    if TEMP_IMG_KEY in session:
+        del session[TEMP_IMG_KEY]
 
