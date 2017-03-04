@@ -15,8 +15,6 @@ ROUTER.add(web.players.views.home, web.players.pages.Home.url_regex, 'GET')
 
 def get():
     def _app(request):
-        user = web.session.user()
-        if user:
-            return ROUTER(request)
+        return ROUTER(request)
     return _app
 

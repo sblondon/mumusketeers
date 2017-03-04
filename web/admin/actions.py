@@ -16,7 +16,7 @@ def connect(request, slugid=""):
     try:
         player = models.players.Player.read(slugid)
         web.session.login(player)
-        return ywsgi.redirect(web.players.pages.Home.url)
+        return ywsgi.redirect(web.players.pages.Home.make_url(player))
     except yzodb.ObjectNotFoundException:
         web.session.add_user_error_notif(web.strings.LOGIN_ERROR)
     page = web.admin.pages.Players()

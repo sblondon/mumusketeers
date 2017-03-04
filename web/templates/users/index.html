@@ -2,5 +2,18 @@
 
 
 {% block content %}
-<p class="lead text-center">Bienvenue.</p>
+<div class="row">
+    <h2>Games</h2>
+    <ul>
+    {% for game in player.games %}
+        <li><a href="{{ pages.admin.GameDetails.make_url(game) }}">{{ game.name }}</a></li>
+    {% else %}
+        <li>No games</li>
+    {% endfor %}
+    <ul>
+<div class="row">
+
+<!-- {{ player.id }} -->
+<!-- player home page -->
 {% endblock %}
+
