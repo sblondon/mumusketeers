@@ -118,6 +118,8 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             player = models.players.read(EMAIL)
             self.assertIn(player, game.waiting_players)
             self.assertEqual(1, models.players.Player.count())
+            self.assertIn(game, player.wait_for_games)
+            self.assertIn(game, player.games)
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
@@ -153,6 +155,8 @@ class TestGameDetails(web.tests.helper.WebTestCase):
                 self.assertIn(player.targetted_by_player_for_game(game), game.playing_players)
                 self.assertNotEqual(player.targetted_by_player_for_game(game), player)
                 targetted_by_players.add(player.targetted_by_player_for_game(game))
+                self.assertIn(game, player.games)
+                self.assertNotIn(game, player.wait_for_games)
             self.assertEqual({player_A, player_B, player_C, player_D}, current_targets)
             self.assertEqual({player_A, player_B, player_C, player_D}, targetted_by_players)
             self.assertEqual({player_A, player_B, player_C, player_D}, set(game.players_loop))

@@ -29,6 +29,7 @@ class Game(models.Model):
         except models.NotAllowed:
             player = models.players.read(email)
         self.waiting_players.add(player)
+        player.wait_for_games.add(self)
         return player
 
     def start(self):
@@ -49,6 +50,7 @@ class Game(models.Model):
         for player in players:
             self.waiting_players.remove(player)
             self.playing_players.add(player)
+            player.wait_for_games.remove(self)
             player.add_current_target_for_game(targetting[player]["current target"], self)
             player.add_targetted_by_player_for_game(targetting[player]["targetted_by_player"], self)
 

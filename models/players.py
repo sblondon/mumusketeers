@@ -29,6 +29,7 @@ class Player(models.Model):
     _email = yzodb.SimpleAttribute()
     _current_targets = yzodb.ModelDictAttribute("models.players.Player")
     _targetted_by_players = yzodb.ModelDictAttribute("models.players.Player")
+    wait_for_games = yzodb.ModelSetAttribute("models.games.Game")
 
     def delete(self):
         Indexes.delete(self)
@@ -55,6 +56,13 @@ class Player(models.Model):
 
     def targetted_by_player_for_game(self, game):
         return self._targetted_by_players[game.id]
+
+    @property
+    def games(self):
+        import models.games
+        games = [models.games.Game.read(game_id) for game_id in self._targetted_by_players.keys()]
+        games.extend(self.wait_for_games)
+        return games
 
 
 class Indexes(yzodb.Model):
