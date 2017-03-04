@@ -68,13 +68,13 @@
    {% if game.playing_players %}
    <ul>
        {% for player in game.playing_players %}
-       <li>{{ player.targetted_by_player_for_game(game).email }} → <strong>{{ player.email }}</strong> → {{ player.current_target_for_game(game).email }} </li>
+       <li>{{ player.targetted_by_player_for_game(game).email }} → <strong><a href="{{ pages.admin.PlayerDetails.make_url(player)}}">{{ player.email }}</a></strong> → {{ player.current_target_for_game(game).email }} </li>
        {% endfor %}
    </ul>
 
    <p>
         {% for player in game.players_loop %}
-        {{ player.email }} {% if not loop.last %}→{% endif %}
+        <a href="{{ pages.admin.PlayerDetails.make_url(player)}}">{{ player.email }}</a> {% if not loop.last %}→{% endif %}
         {% endfor %}
     </p>
    {% else %}

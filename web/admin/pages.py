@@ -5,7 +5,10 @@ import web.pages
 
 
 class AdminPage(web.pages.Page):
-    pass
+
+    @classmethod
+    def make_url(cls, obj):
+        return cls.url + "{0}".format(obj.id)
 
 
 class Home(AdminPage):
@@ -69,8 +72,4 @@ class GameDetails(AdminPage):
             game=self.game,
             add_player_form=self.add_player_form,
         )
-
-    @classmethod
-    def make_url(cls, obj):
-        return cls.url + "{0}".format(obj.id)
 
