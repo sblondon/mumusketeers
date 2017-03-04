@@ -3,15 +3,25 @@
 
 {% block content %}
 <div class="row">
-    <h2>Games</h2>
-    <ul>
-    {% for game in player.games %}
-        <li><a href="{{ pages.admin.GameDetails.make_url(game) }}">{{ game.name }}</a></li>
-    {% else %}
-        <li>No games</li>
-    {% endfor %}
-    <ul>
-<div class="row">
+    {% if player.games %}
+        {% for game in player.games %}
+        <h2>{{ game.name }} <small>{% if game.preparing %}
+                Preparing
+            {% elif game.running %}
+                Running
+            {% else %}
+                Unknown
+            {% endif %}</small>
+        </h2>
+
+            {% if game.running %}
+            <p>Your target is {{ player.current_target_for_game(game).email }}.</p>
+            {% endif %}
+        {% endfor %}
+     {% else %}
+         No games
+     {% endif %}
+</div>
 
 <!-- {{ player.id }} -->
 <!-- player home page -->
