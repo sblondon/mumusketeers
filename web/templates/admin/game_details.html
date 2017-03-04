@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <dl>
+        <dl class="dl-horizontal">
             <dt>Creation date</dt>
             <dd>{{ game.creation_datetime().strftime("%Y-%m-%d %H:%M") }}</dd>
             <dt>Status</dt>
@@ -47,7 +47,7 @@
         {% if game.waiting_players %}
         <ul>
             {% for player in game.waiting_players %}
-            <li>{{ player.email }}</li>
+            <li><a href="{{ pages.admin.PlayerDetails.make_url(player)}}">{{ player.email }}</a></li>
             {% endfor %}
         </ul>
         {% else %}
