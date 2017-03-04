@@ -22,24 +22,11 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/user/">
+                <a class="navbar-brand" href="{{ pages.players.Home.make_url(player) }}">
                     <span class="glyphicon glyphicon-home"></span>
                 </a>
             </div>
-            {% if user %}
-            <ul class="nav navbar-nav navbar-left">
-                <li>
-                    <a href="/user/logout/" title="{{ user.email }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                {#<li{% if active_item == 'programmes' %} class="active"{% endif %}>
-                    <a href="/user/programmes/"><span class="glyphicon glyphicon-th"></span> Programmes</a>
-                    </li>#}
-            </ul>
-            {% else %}
-            <p class="navbar-text navbar-right">Espace réservé aux utilisateurs identifiés</p>
-            {% endif %}
+            <p class="navbar-text navbar-right">{{ player.email }}</p>
         </div>
     </nav>
 {%- endmacro %}

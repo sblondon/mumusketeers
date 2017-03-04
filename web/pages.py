@@ -41,6 +41,9 @@ class Page(ytemplates.Template):
                     "Games": web.admin.pages.Games,
                     "GameDetails": web.admin.pages.GameDetails,
                 },
+                "players": {
+                    "Home": web.players.pages.Home,
+                },
             },
             "forms": {
                 "admin": {
