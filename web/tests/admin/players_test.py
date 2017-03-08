@@ -18,7 +18,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
         response = response.click('Players')
 
-        self.assertEquals('text/html', response.content_type)
+        assert 'text/html' == response.content_type
         response.mustcontain('Admin')
         response.mustcontain('Aucun utilisateur')
 
@@ -33,7 +33,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [_user] = models.players.Player.read_all()
-            self.assertTrue("user@yaal.fr", _user.email)
+            assert "user@yaal.fr", _user.email
 
         response.mustcontain('user@yaal.fr')
         response.mustcontain(web.strings.USER_CREATE_SUCCESS.format(user="user@yaal.fr"))
@@ -46,7 +46,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
         response = response.form.submit(status=200)
 
-        self.assertEquals(response.form.fields['email'][0].value, 'user@yaal')
+        assert response.form.fields['email'][0].value == 'user@yaal'
         response.mustcontain(web.strings.USER_CREATE_FAILURE)
         response.mustcontain(web.strings.EMAIL_FORMAT_ERROR)
 
@@ -62,7 +62,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
         response = response.form.submit(status=200)
 
-        self.assertEquals(response.form.fields['email'][0].value, 'user@yaal.fr')
+        assert response.form.fields['email'][0].value == 'user@yaal.fr'
         response.mustcontain(web.strings.USER_CREATE_FAILURE)
 
 
@@ -84,7 +84,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = response.click('Connexion')
         response = response.follow(status=200)
 
-        self.assertEquals('text/html', response.content_type)
+        assert 'text/html' == response.content_type
         response.mustcontain('Accueil')
 
 
@@ -126,7 +126,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
         response = response.click('Modifier')
 
-        self.assertEquals(response.form.fields['email'][0].value, 'user@yaal.fr')
+        assert response.form.fields['email'][0].value == 'user@yaal.fr'
         response.form.fields['email'][0].value = 'yop@yaal.fr'
 
         response = response.form.submit(status=302)
@@ -147,7 +147,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
         response = response.click('Modifier')
 
-        self.assertEquals(response.form.fields['email'][0].value, 'user@yaal.fr')
+        assert response.form.fields['email'][0].value == 'user@yaal.fr'
 
         response = response.form.submit(status=302)
         response = response.follow(status=200)

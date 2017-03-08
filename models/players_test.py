@@ -7,8 +7,8 @@ class TestCreate(yzodb.ConnectedTestCase):
     def test(self):
         models.players.create_player('User@yaal.fr')
 
-        self.assertTrue(models.players.read("user@yaal.fr"))
-        self.assertTrue(models.players.read("uSER@yaal.fr"))
+        assert models.players.read("user@yaal.fr")
+        assert models.players.read("uSER@yaal.fr")
 
     def test_once_is_enough(self):
         models.players.create_player('User@yaal.fr')
@@ -25,7 +25,7 @@ class TestChangeEmail(yzodb.ConnectedTestCase):
     def test(self):
         player = models.players.create_player('User@yaal.fr')
         player.email = "UPDATE@yaal.fr"
-        self.assertFalse(models.players.read("user@yaal.fr"))
-        self.assertTrue(models.players.read("update@yaal.fr"))
+        assert not models.players.read("user@yaal.fr")
+        assert models.players.read("update@yaal.fr")
 
 

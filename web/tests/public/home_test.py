@@ -15,7 +15,7 @@ class TestHome(web.tests.helper.WebTestCase):
     def test(self):
         response = self.testapp.get('/', status=200)
 
-        self.assertEquals('text/html', response.content_type)
+        assert 'text/html' == response.content_type
         response.mustcontain('Ready to ghostify?')
 
 
@@ -24,7 +24,7 @@ class Test404(web.tests.helper.WebTestCase):
     def test(self):
         response = self.testapp.get('/this-url-does-not-exist', status=404)
 
-        self.assertEquals('text/html', response.content_type)
+        assert 'text/html' == response.content_type
         response.mustcontain('404')
 
 

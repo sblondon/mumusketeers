@@ -20,7 +20,7 @@ class TestHome(web.tests.helper.WebTestCase):
 
         response = self.testapp.get(url, status=200)
 
-        self.assertEqual('text/html', response.content_type)
+        assert 'text/html' == response.content_type
         response.mustcontain('<!-- player home page -->')
         response.mustcontain(player.id)
 

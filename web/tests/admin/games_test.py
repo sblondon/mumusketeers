@@ -18,7 +18,7 @@ class TestAdminGames(web.tests.helper.WebTestCase):
 
         response = response.click('Games')
 
-        self.assertEquals('text/html', response.content_type)
+        assert 'text/html' == response.content_type
         response.mustcontain('Admin')
         response.mustcontain('No games')
 
@@ -33,7 +33,7 @@ class TestAdminGames(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [game] = models.games.Game.read_all()
-            self.assertEqual("GAMENAME", game.name)
+            assert "GAMENAME" == game.name
             response.mustcontain(game.id)
         response.mustcontain('GAMENAME')
         response.mustcontain(web.strings.GAME_CREATE_SUCCESS.format(name="GAMENAME"))
@@ -47,7 +47,7 @@ class TestAdminGames(web.tests.helper.WebTestCase):
         response = response.form.submit(status=200)
 
         with yzodb.connection():
-            self.assertEqual(0, models.games.Game.count())
+            assert 0 == models.games.Game.count()
         response.mustcontain(web.strings.GAME_CREATE_FAILURE)
 
 
@@ -63,7 +63,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
         response = response.click('Details')
 
         form = response.forms["update_game_form"]
-        self.assertEqual(form.fields['name'][0].value, 'GAMENAME')
+        assert form.fields['name'][0].value == 'GAMENAME'
         form.fields['name'][0].value = 'New name'
 
         response = form.submit(status=302)
@@ -71,7 +71,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [game] = models.games.Game.read_all()
-            self.assertEqual("New name", game.name)
+            assert "New name" == game.name
 
         response.mustcontain(web.strings.GAME_EDIT_SUCCESS.format(name="New name"))
 
@@ -93,7 +93,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
         with yzodb.connection():
             [game] = models.games.Game.read_all()
             player = models.players.read("player@domain.tld")
-            self.assertIn(player, game.waiting_players)
+            assert player in game.waiting_players
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
@@ -116,10 +116,10 @@ class TestGameDetails(web.tests.helper.WebTestCase):
         with yzodb.connection():
             [game] = models.games.Game.read_all()
             player = models.players.read(EMAIL)
-            self.assertIn(player, game.waiting_players)
-            self.assertEqual(1, models.players.Player.count())
-            self.assertIn(game, player.wait_for_games)
-            self.assertIn(game, player.games)
+            assert player in game.waiting_players
+            assert 1 == models.players.Player.count()
+            assert game in player.wait_for_games
+            assert game in player.games
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
@@ -133,8 +133,8 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             player_D = game.add_player_email("D@domain.tld")
             transaction.commit()
             url = web.admin.pages.GameDetails.make_url(game)
-            self.assertTrue(game.preparing)
-            self.assertFalse(game.running)
+            assert game.preparing
+            assert not game.running
         response = self.testapp.get(url, status=200)
 
         response = response.click('Start game')
@@ -142,24 +142,24 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             [game] = models.games.Game.read_all()
-            self.assertFalse(game.preparing)
-            self.assertTrue(game.running)
-            self.assertEqual(set(), set(game.waiting_players))
-            self.assertEqual({player_A, player_B, player_C, player_D}, set(game.playing_players))
+            assert not game.preparing
+            assert game.running
+            assert set() == set(game.waiting_players)
+            assert {player_A, player_B, player_C, player_D} == set(game.playing_players)
             current_targets = set()
             targetted_by_players = set()
             for player in game.playing_players:
-                self.assertIn(player.current_target_for_game(game), game.playing_players)
-                self.assertNotEqual(player.current_target_for_game(game), player)
+                assert player.current_target_for_game(game) in game.playing_players
+                assert player.current_target_for_game(game) != player
                 current_targets.add(player.current_target_for_game(game))
-                self.assertIn(player.targetted_by_player_for_game(game), game.playing_players)
-                self.assertNotEqual(player.targetted_by_player_for_game(game), player)
+                assert player.targetted_by_player_for_game(game) in game.playing_players
+                assert player.targetted_by_player_for_game(game) != player
                 targetted_by_players.add(player.targetted_by_player_for_game(game))
-                self.assertIn(game, player.games)
-                self.assertNotIn(game, player.wait_for_games)
-            self.assertEqual({player_A, player_B, player_C, player_D}, current_targets)
-            self.assertEqual({player_A, player_B, player_C, player_D}, targetted_by_players)
-            self.assertEqual({player_A, player_B, player_C, player_D}, set(game.players_loop))
+                assert game in player.games
+                assert game not in player.wait_for_games
+            assert {player_A, player_B, player_C, player_D} == current_targets
+            assert {player_A, player_B, player_C, player_D} == targetted_by_players
+            assert {player_A, player_B, player_C, player_D} == set(game.players_loop)
 
         response.mustcontain(web.strings.GAME_STARTED_SUCCESS)
         response.mustcontain(no=['Start game'])
