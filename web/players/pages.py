@@ -18,6 +18,5 @@ class Home(AbstractPage):
     template = 'users/index.html'
 
     def context_update(self):
-        print(self.player)
         return {"player": self.player}
 

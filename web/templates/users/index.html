@@ -21,7 +21,7 @@
                 <a href="{{ forms.players.GhostifyPlayer.make_url(game, player) }}" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> I ghostified {{ player.current_target_for_game(game).email }}</a>
             </div>
             <div class="col-md-6">
-                <a href="{{ forms.admin.StartGame.make_url(game) }}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> I've been ghostified!</a>
+                <a href="{{ forms.players.GhostifiedPlayer.make_url(game, player) }}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> I've been ghostified!</a>
             </div>
             {% endif %}
         {% endfor %}

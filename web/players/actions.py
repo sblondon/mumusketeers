@@ -17,3 +17,7 @@ def ghostify_player(request, gameid, playerid):
     player = models.players.Player.read(playerid)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
+def ghostified_player(request, gameid, playerid):
+    player = models.players.Player.read(playerid)
+    return ywsgi.redirect(web.players.pages.Home.make_url(player))
+

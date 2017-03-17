@@ -54,9 +54,8 @@ class Page(ytemplates.Template):
                 },
                 "players": {
                     "GhostifyPlayer": web.players.forms.GhostifyPlayer,
+                    "GhostifiedPlayer": web.players.forms.GhostifiedPlayer,
                 },
-
-
             },
         }
 
