@@ -2,6 +2,7 @@ import web.constantes
 
 
 class AbstractGhostification:
+    method = 'GET'
 
     @classmethod
     def make_url(cls, game, player):
@@ -14,7 +15,6 @@ class GhostifyPlayer(AbstractGhostification):
             action=action,
             game_id=web.constantes.SLUGID_REGEX,
             player_id=web.constantes.SLUGID_REGEX)
-    method = 'GET'
 
 
 class GhostifiedPlayer(AbstractGhostification):
@@ -23,5 +23,4 @@ class GhostifiedPlayer(AbstractGhostification):
             action=action,
             game_id=web.constantes.SLUGID_REGEX,
             player_id=web.constantes.SLUGID_REGEX)
-    method = 'GET'
 
