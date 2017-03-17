@@ -52,6 +52,11 @@ class Page(ytemplates.Template):
                     "EditPlayer": web.admin.forms.EditPlayer,
                     "StartGame": web.admin.forms.StartGame,
                 },
+                "players": {
+                    "GhostifyPlayer": web.players.forms.GhostifyPlayer,
+                },
+
+
             },
         }
 
