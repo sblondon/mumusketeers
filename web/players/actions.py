@@ -13,11 +13,11 @@ def logout(request):
     web.session.add_user_success_notif(web.strings.LOGOUT_SUCCESS)
     return ywsgi.redirect(web.public.pages.Login.url)
 
-def ghostify_player(request, gameid, playerid):
-    player = models.players.Player.read(playerid)
+def ghostify_player(request, game_id, player_id):
+    player = models.players.Player.read(player_id)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
-def ghostified_player(request, gameid, playerid):
-    player = models.players.Player.read(playerid)
+def ghostified_player(request, game_id, player_id):
+    player = models.players.Player.read(player_id)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
