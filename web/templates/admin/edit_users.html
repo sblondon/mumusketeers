@@ -11,6 +11,9 @@
 {% block content %}
 
 <div class="row">
+    <h1>{{ user.email }} <a href="{{ forms.admin.ConnectAsPlayer.make_url(user) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Connection</a></h1>
+
+
     {% call macros.render_form(form, form_title='Modify a player', action_text='Update') %}
             {{ macros.render_field(form.email, placeholder="Insert e-mmail") }}
     {% endcall %}
