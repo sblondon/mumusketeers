@@ -15,7 +15,7 @@ class AbstractPage(web.pages.Page):
 class Home(AbstractPage):
     url = '/player/'
     url_regex = '^{url}(?P<slugid>{slugid})'.format(url=url, slugid=web.constantes.SLUGID_REGEX)
-    template = 'users/index.html'
+    template = 'players/index.html'
 
     def context_update(self):
         return {"player": self.player}
