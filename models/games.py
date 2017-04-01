@@ -36,25 +36,23 @@ class Game(models.Model):
         self._status = 1
         players = list(self.waiting_players)
         random.shuffle(players)
-        targetting  = {}
+        target_loop  = {}
         for index, player in enumerate(players):
             if index == 0:
                 first_player = player
-                targetting[player] = {"current target": players[index + 1]}
+                target_loop[player] = {"current target": players[index + 1]}
             elif index == len(players) - 1:
-                targetting[player] = {"current target": first_player, "targetted_by_player": players[index - 1]}
-                targetting[first_player].update({"targetted_by_player": player})
+                target_loop[player] = {"current target": first_player, "targetted_by_player": players[index - 1]}
+                target_loop[first_player].update({"targetted_by_player": player})
             else:
-                targetting[player] = {"current target": players[index + 1], "targetted_by_player": players[index - 1]}
+                target_loop[player] = {"current target": players[index + 1], "targetted_by_player": players[index - 1]}
 
         for player in players:
             self.waiting_players.remove(player)
             self.playing_players.add(player)
             player.wait_for_games.remove(self)
-            player_target = targetting[player]["current target"]
-            player_hunter = targetting[player]["targetted_by_player"]
-            #player.add_current_target_for_game(player_target, self)
-            #player.add_targetted_by_player_for_game(player_hunter, self)
+            player_target = target_loop[player]["current target"]
+            player_hunter = target_loop[player]["targetted_by_player"]
             self.create_hunt(player_hunter, player)
 
     def create_hunt(self, hunter, target):
