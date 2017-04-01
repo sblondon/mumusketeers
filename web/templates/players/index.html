@@ -15,7 +15,7 @@
         </h2>
 
             {% if game.running %}
-            <p>Your target is {{ player.current_target_for_game(game).email }}.</p>
+            <p>Your current target is {{ player.current_target_for_game(game).email }}.</p>
 
             <div class="col-md-6">
                 <a href="{{ forms.players.GhostifyPlayer.make_url(game, player) }}" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> I ghostified {{ player.current_target_for_game(game).email }}</a>

@@ -66,12 +66,6 @@
 <div class="row">
    <h2>{{ game.playing_players | length }} players currently in game</h2>
    {% if game.playing_players %}
-   <ul>
-       {% for player in game.playing_players %}
-       <li>{{ player.targetted_by_player_for_game(game).email }} → <strong><a href="{{ pages.admin.PlayerDetails.make_url(player)}}">{{ player.email }}</a></strong> → {{ player.current_target_for_game(game).email }} </li>
-       {% endfor %}
-   </ul>
-
    <p>
         {% for player in game.players_loop %}
         <a href="{{ pages.admin.PlayerDetails.make_url(player)}}">{{ player.email }}</a> {% if not loop.last %}→{% endif %}
