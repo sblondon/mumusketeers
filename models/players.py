@@ -45,6 +45,12 @@ class Player(models.Model):
         self._email = value.lower()
         Indexes.add(self)
 
+    def hunter_hunt_for_game(self, game):
+        return self._current_hunts[game.id]
+
+    def hunted_hunt_for_game(self, game):
+        return self._hunted_by_players[game.id]
+
     def current_target_for_game(self, game):
         return self._current_hunts[game.id].target
 

@@ -15,4 +15,6 @@ class Hunt(models.Model):
 
     hunter = yzodb.ModelAttribute("models.players.Player")
     target = yzodb.ModelAttribute("models.players.Player")
+    done_according_hunter = yzodb.BooleanAttribute()
+    done_according_target = yzodb.BooleanAttribute()
 

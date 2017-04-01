@@ -39,6 +39,10 @@ class TestGhostification(web.tests.helper.WebTestCase):
         response = self.testapp.get(url, status=200)
         response.click(href=web.players.forms.GhostifyPlayer.make_url(game, player))
 
+        with yzodb.connection():
+            hunt = player.hunter_hunt_for_game(game)
+            assert hunt.done_according_hunter
+            assert False == hunt.done_according_target
         assert 'text/html' == response.content_type
         response.mustcontain('<!-- player home page -->')
         response.mustcontain(player.id)
@@ -55,6 +59,10 @@ class TestGhostification(web.tests.helper.WebTestCase):
         response = self.testapp.get(url, status=200)
         response.click(href=web.players.forms.GhostifiedPlayer.make_url(game, player))
 
+        with yzodb.connection():
+            hunt = player.hunted_hunt_for_game(game)
+            assert False == hunt.done_according_hunter
+            assert hunt.done_according_target
         assert 'text/html' == response.content_type
         response.mustcontain('<!-- player home page -->')
         response.mustcontain(player.id)
