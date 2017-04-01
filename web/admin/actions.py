@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import ywsgi
 import yzodb
 

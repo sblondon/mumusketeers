@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 # Admin
 USER_CREATE_SUCCESS = "L'utilisateur {user} a été créé avec succès."

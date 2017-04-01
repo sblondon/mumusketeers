@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import web.settings
 
 web.settings.HOST = "http://integration.app.yaal.fr"

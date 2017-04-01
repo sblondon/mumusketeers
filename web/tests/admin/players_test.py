@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import transaction
 
 import web.tests.helper

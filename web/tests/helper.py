@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from datetime import datetime as Datetime
 import webtest
 import shutil
 

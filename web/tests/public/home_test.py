@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import transaction
 import werkzeug.exceptions
 import webtest

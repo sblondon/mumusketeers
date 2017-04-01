@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-
 import web.tests.helper
+
 
 class TestAdminHome(web.tests.helper.WebTestCase):
 
