@@ -34,21 +34,3 @@ class LoggedUserWebTestCase(WebTestCase):
         self.testapp.post('/admin/user/add/', dict(email='user@yaal.fr', password='password'))
         self.testapp.post(web.players.forms.Login.action, dict(email='user@yaal.fr', password='password'))
 
-
-def create_spoof_datetime():
-    """ La création des classes dans une fonction permet d'éviter les effets de bord.
-    Chaque méthode de test ont leur propre classe SpoofDatetime. """
-
-    class SpoofDatetimeMeta(type):
-        def __instancecheck__(cls, inst):
-            if type(inst) == SpoofDatetime:
-                return True
-            return  isinstance(inst, Datetime)
-    
-    class SpoofDatetime(Datetime):
-        __metaclass__ = SpoofDatetimeMeta
-        def __new__(cls, *args, **kwargs):
-            return Datetime.__new__(Datetime, *args, **kwargs)
-
-    return SpoofDatetime
-
