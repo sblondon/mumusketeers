@@ -57,7 +57,7 @@ class Game(models.Model):
 
     def _create_hunt(self, hunter, target):
         import models.hunts
-        models.hunts.create_hunt-self, hunter, target)
+        models.hunts.create_hunt(self, hunter, target)
 
     @property
     def players_loop(self):
