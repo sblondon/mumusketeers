@@ -51,8 +51,15 @@ class Game(models.Model):
             self.waiting_players.remove(player)
             self.playing_players.add(player)
             player.wait_for_games.remove(self)
-            player.add_current_target_for_game(targetting[player]["current target"], self)
-            player.add_targetted_by_player_for_game(targetting[player]["targetted_by_player"], self)
+            player_target = targetting[player]["current target"]
+            player_hunter = targetting[player]["targetted_by_player"]
+            #player.add_current_target_for_game(player_target, self)
+            #player.add_targetted_by_player_for_game(player_hunter, self)
+            self.create_hunt(player_hunter, player)
+
+    def create_hunt(self, hunter, target):
+        import models.hunts
+        hunt = models.hunts.create_hunt(self, hunter, target)
 
     @property
     def players_loop(self):
