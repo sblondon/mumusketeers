@@ -52,10 +52,10 @@ class Player(models.Model):
         return self._hunted_by_players[game.id]
 
     def current_target_for_game(self, game):
-        return self._current_hunts[game.id].target
+        return self.hunter_hunt_for_game(game).target
 
     def targetted_by_player_for_game(self, game):
-        return self._hunted_by_players[game.id].hunter
+        return self.hunted_hunt_for_game(game).hunter
 
     def add_current_hunt_for_game(self, hunt, game):
         self._current_hunts[game.id] = hunt
