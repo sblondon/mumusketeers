@@ -19,16 +19,14 @@ def logout(request):
 def ghostify_player(request, game_id, player_id):
     game = models.games.Game.read(game_id)
     player = models.players.Player.read(player_id)
-    hunt = player.hunter_hunt_for_game(game)
-    hunt.done_according_hunter = True
+    player.declare_ghostify_for_game(game)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
 @yzodb.commit
 def ghostified_player(request, game_id, player_id):
     game = models.games.Game.read(game_id)
     player = models.players.Player.read(player_id)
-    hunt = player.hunted_hunt_for_game(game)
-    hunt.done_according_target = True
+    player.declare_ghostified_for_game(game)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
