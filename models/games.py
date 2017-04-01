@@ -53,11 +53,11 @@ class Game(models.Model):
             player.wait_for_games.remove(self)
             player_target = target_loop[player]["current target"]
             player_hunter = target_loop[player]["targetted_by_player"]
-            self.create_hunt(player_hunter, player)
+            self._create_hunt(player_hunter, player)
 
-    def create_hunt(self, hunter, target):
+    def _create_hunt(self, hunter, target):
         import models.hunts
-        hunt = models.hunts.create_hunt(self, hunter, target)
+        models.hunts.create_hunt-self, hunter, target)
 
     @property
     def players_loop(self):
