@@ -75,6 +75,7 @@ class Player(models.Model):
     def declare_ghostify_for_game(self, game):
         hunt = self.hunter_hunt_for_game(game)
         hunt.done_according_hunter = True
+        hunt.update(game)
 
     def declare_ghostified_for_game(self, game):
         hunt = self.hunted_hunt_for_game(game)
