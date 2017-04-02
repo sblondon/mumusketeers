@@ -24,3 +24,5 @@ class Hunt(models.Model):
             self.hunter.add_current_hunt_for_game(next_hunt, game)
             next_hunt.hunter = self.hunter
             self.target.ghostified.add(game)
+            self.hunter.add_ghostification_for_game(self.target, game)
+

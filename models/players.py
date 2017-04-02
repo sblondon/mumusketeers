@@ -31,6 +31,7 @@ class Player(models.Model):
     _hunted_by_players = yzodb.ModelDictAttribute("models.hunts.Hunt")
     wait_for_games = yzodb.ModelSetAttribute("models.games.Game")
     ghostified = yzodb.ModelSetAttribute("models.games.Game")
+    _ghostification_ids = yzodb.DictAttribute()
 
 
     def delete(self):
@@ -49,6 +50,17 @@ class Player(models.Model):
 
     def is_ghostified_for_game(self, game):
         return game in self.ghostified
+
+    def add_ghostification_for_game(self, player, game):
+        if game.id not in self._ghostification_ids.keys():
+            self._ghostification_ids[game.id] = set()
+        self._ghostification_ids[game.id].add(player.id)
+
+    def ghostified_players_for_game(self, game):
+        print(self._ghostification_ids[game.id])
+        return [Player.read(player_id)
+                for player_id
+                in self._ghostification_ids[game.id]]
 
     def hunter_hunt_for_game(self, game):
         if self.is_ghostified_for_game(game):
