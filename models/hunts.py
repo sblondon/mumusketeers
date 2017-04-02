@@ -18,3 +18,9 @@ class Hunt(models.Model):
     done_according_hunter = yzodb.BooleanAttribute()
     done_according_target = yzodb.BooleanAttribute()
 
+    def update(self, game):
+        if self.done_according_hunter and self.done_according_target:
+            next_hunt = self.target.hunter_hunt_for_game(game)
+            self.hunter.add_current_hunt_for_game(next_hunt, game)
+            next_hunt.hunter = self.hunter
+            self.target.ghostified.add(game)

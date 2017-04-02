@@ -30,6 +30,8 @@ class Player(models.Model):
     _current_hunts = yzodb.ModelDictAttribute("models.hunts.Hunt")
     _hunted_by_players = yzodb.ModelDictAttribute("models.hunts.Hunt")
     wait_for_games = yzodb.ModelSetAttribute("models.games.Game")
+    ghostified = yzodb.ModelSetAttribute("models.games.Game")
+
 
     def delete(self):
         Indexes.delete(self)
@@ -45,10 +47,17 @@ class Player(models.Model):
         self._email = value.lower()
         Indexes.add(self)
 
+    def is_ghostified_for_game(self, game):
+        return game in self.ghostified
+
     def hunter_hunt_for_game(self, game):
+        if self.is_ghostified_for_game(game):
+            return
         return self._current_hunts[game.id]
 
     def hunted_hunt_for_game(self, game):
+        if self.is_ghostified_for_game(game):
+            return
         return self._hunted_by_players[game.id]
 
     def current_target_for_game(self, game):
@@ -70,6 +79,7 @@ class Player(models.Model):
     def declare_ghostified_for_game(self, game):
         hunt = self.hunted_hunt_for_game(game)
         hunt.done_according_target = True
+        hunt.update(game)
 
     @property
     def games(self):
