@@ -1,8 +1,11 @@
 #! /bin/bash
 
+set -e
+set -o nounset
+
 . ./scripts/local/display_service.sh
 
-PORT=8000
+PORT=`grep "PORT =" scripts/local/env_settings.py | cut -d " " -f 3`
 VERSIONIZED=`grep yversionize.VERSION web/settings.py | cut -d " " -f 3 | sed s/\"//g`
 
 env PYTHONPATH=. ./local.virtualenv/bin/uwsgi \
