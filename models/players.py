@@ -52,12 +52,9 @@ class Player(models.Model):
         return game in self.ghostified
 
     def add_ghostification_for_game(self, player, game):
-        if game.id not in self._ghostification_ids.keys():
-            self._ghostification_ids[game.id] = set()
         self._ghostification_ids[game.id].add(player.id)
 
     def ghostified_players_for_game(self, game):
-        print(self._ghostification_ids[game.id])
         return [Player.read(player_id)
                 for player_id
                 in self._ghostification_ids[game.id]]
@@ -93,6 +90,10 @@ class Player(models.Model):
         hunt = self.hunted_hunt_for_game(game)
         hunt.done_according_target = True
         hunt.update(game)
+
+    def add_for_game(self, game):
+        self.wait_for_games.add(game)
+        self._ghostification_ids[game.id] = set()
 
     @property
     def games(self):

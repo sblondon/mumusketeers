@@ -76,4 +76,21 @@
    {% endif %}
 </div>
 
+<div class="row">
+   <h2>Players statuses</h2>
+   <table>
+       <tr>
+           <th>e-mail</th>
+           <th>score</th>
+           <th>ghostified</th>
+       </tr>
+       {% for player in game.playing_players %}
+       <tr>
+           <td>{{ player.email }}</td>
+           <td>{{ player.ghostified_players_for_game(game) | length }}</td>
+           <td>{{ player.is_ghostified_for_game(game) }}</td>
+       </tr>
+       {% endfor %}
+   </table>
+</div>
 {% endblock %}

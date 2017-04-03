@@ -29,7 +29,7 @@ class Game(models.Model):
         except models.NotAllowed:
             player = models.players.read(email)
         self.waiting_players.add(player)
-        player.wait_for_games.add(self)
+        player.add_for_game(self)
         return player
 
     def start(self):
