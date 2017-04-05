@@ -11,7 +11,7 @@ def create_game(name):
     return game
 
 
-_PREPAPRING_STATUS = 0
+_PREPARING_STATUS = 0
 _RUNNING_STATUS = 1
 
 class Game(models.Model):
@@ -20,7 +20,7 @@ class Game(models.Model):
     name = yzodb.SimpleAttribute()
     waiting_players = yzodb.ModelSetAttribute("models.players.Player")
     playing_players = yzodb.ModelSetAttribute("models.players.Player")
-    _status = yzodb.SimpleAttribute(default=_PREPAPRING_STATUS)
+    _status = yzodb.SimpleAttribute(default=_PREPARING_STATUS)
 
     def add_player_email(self, email):
         import models.players
