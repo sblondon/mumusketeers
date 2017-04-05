@@ -15,7 +15,10 @@
         </h2>
 
             {% if game.running %}
-            <p>Your current target is {{ player.current_target_for_game(game).email }}.</p>
+                {% if player.ghostified %}
+                <p>You are ghostified.</p>
+                {% else %}
+                <p>Your current target is {{ player.current_target_for_game(game).email }}.</p>
 
             <div class="col-md-6">
                 {% if player.hunter_hunt_for_game(game).done_according_hunter %}
@@ -31,6 +34,7 @@
                 <a href="{{ forms.players.GhostifiedPlayer.make_url(game, player) }}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> I've been ghostified!</a>
                 {% endif %}
             </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
      {% else %}
