@@ -20,20 +20,20 @@
                 {% else %}
                 <p>Your current target is {{ player.current_target_for_game(game).email }}.</p>
 
-            <div class="col-md-6">
-                {% if player.hunter_hunt_for_game(game).done_according_hunter %}
-                <em>I ghostified {{ player.current_target_for_game(game).email }}</em>
-                {% else %}
-                <a href="{{ forms.players.GhostifyPlayer.make_url(game, player) }}" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> I ghostified {{ player.current_target_for_game(game).email }}</a>
-                {% endif %}
-            </div>
-            <div class="col-md-6">
-                {% if player.hunted_hunt_for_game(game).done_according_target %}
-                <em>I've been ghostified!</em>
-                {% else %}
-                <a href="{{ forms.players.GhostifiedPlayer.make_url(game, player) }}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> I've been ghostified!</a>
-                {% endif %}
-            </div>
+                <div class="col-md-6">
+                    {% if player.hunter_hunt_for_game(game).done_according_hunter %}
+                    <em>I ghostified {{ player.current_target_for_game(game).email }}</em>
+                    {% else %}
+                    <a href="{{ forms.players.GhostifyPlayer.make_url(game, player) }}" class="btn btn-info"><span class="glyphicon glyphicon-ok"></span> I ghostified {{ player.current_target_for_game(game).email }}</a>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {% if player.hunted_hunt_for_game(game).done_according_target %}
+                    <em>I've been ghostified!</em>
+                    {% else %}
+                    <a href="{{ forms.players.GhostifiedPlayer.make_url(game, player) }}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> I've been ghostified!</a>
+                    {% endif %}
+                </div>
                 {% endif %}
             {% endif %}
         {% endfor %}
