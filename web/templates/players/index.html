@@ -16,7 +16,7 @@
 
             {% if game.running %}
                 {% if player.ghostified %}
-                <p>You are ghostified.</p>
+                <p>You have been ghostified.</p>
                 {% else %}
                 <p>Your current target is {{ player.current_target_for_game(game).email }}.</p>
 
@@ -35,6 +35,7 @@
                     {% endif %}
                 </div>
                 {% endif %}
+                Score: {{ player.ghostified_players_for_game(game) | length }} ghostification(s)
             {% endif %}
         {% endfor %}
      {% else %}
