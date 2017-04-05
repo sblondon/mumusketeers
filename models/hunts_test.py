@@ -79,5 +79,5 @@ def test_add_ghostifications():
         transaction.commit()
 
     with yzodb.connection():
-        assert [target, next_target] == hunter.ghostified_players_for_game(game)
+        assert set([target, next_target]) == set(hunter.ghostified_players_for_game(game))
 
