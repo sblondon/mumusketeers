@@ -32,7 +32,7 @@ class Players(AdminPage):
 class EditPlayer(AdminPage):
     url = '/admin/player/edit/'
     url_regex = '^{url}(?P<slugid>{slugid})'.format(url=url, slugid=web.constantes.SLUGID_REGEX)
-    template = 'admin/edit_users.html'
+    template = 'admin/player_details.html'
     _user = None
 
     @property
