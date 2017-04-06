@@ -63,7 +63,7 @@ def edit_user(request, slugid=""):
             return ywsgi.redirect(web.admin.pages.Players.url)
         else:
             web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
-            page = web.admin.pages.EditPlayer()
+            page = web.admin.pages.PlayerDetails()
             form.action = form.action + slugid
             page.form(form)
             page.user = player
@@ -102,7 +102,7 @@ def edit_game(request, slugid=""):
             return ywsgi.redirect(web.admin.pages.Games.url)
 #        else:
 #            web.session.add_user_error_notif(web.strings.USER_EDIT_FAILURE)
-#            page = web.admin.pages.EditPlayer()
+#            page = web.admin.pages.PlayerDetails()
 #            form.action = form.action + slugid
 #            page.form(form)
 #            page.user = _user

@@ -19,7 +19,7 @@ def users(request):
 
 def edit_user(request, slugid=""):
     player = models.players.Player.read(slugid)
-    page = web.admin.pages.EditPlayer()
+    page = web.admin.pages.PlayerDetails()
     page.user = player
     form = web.admin.forms.EditPlayer()
     form.email.raw_data = [player.email]

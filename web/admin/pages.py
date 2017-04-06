@@ -29,7 +29,7 @@ class Players(AdminPage):
         )
 
 
-class EditPlayer(AdminPage):
+class PlayerDetails(AdminPage):
     url = '/admin/player/edit/'
     url_regex = '^{url}(?P<slugid>{slugid})'.format(url=url, slugid=web.constantes.SLUGID_REGEX)
     template = 'admin/player_details.html'

@@ -37,7 +37,7 @@ class Page(ytemplates.Template):
                 "admin": {
                     "Home": web.admin.pages.Home,
                     "Players": web.admin.pages.Players,
-                    "PlayerDetails": web.admin.pages.EditPlayer,
+                    "PlayerDetails": web.admin.pages.PlayerDetails,
                     "Games": web.admin.pages.Games,
                     "GameDetails": web.admin.pages.GameDetails,
                 },
