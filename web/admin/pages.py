@@ -20,7 +20,7 @@ class Home(AdminPage):
 class Players(AdminPage):
     url = '/admin/players'
     url_regex = '^{0}$'.format(url)
-    template = 'admin/users.html'
+    template = 'admin/players.html'
 
     def context_update(self):
         return dict(
