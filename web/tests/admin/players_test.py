@@ -19,12 +19,12 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
         assert 'text/html' == response.content_type
         response.mustcontain('Admin')
-        response.mustcontain('Aucun utilisateur')
+        response.mustcontain('No player')
 
 
     def test_add_user(self):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
-        response.mustcontain('Aucun utilisateur')
+        response.mustcontain('No player')
         response.form.fields['email'][0].value = 'user@yaal.fr '
 
         response = response.form.submit(status=302)
@@ -40,7 +40,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
     def test_format_error_on_add_user(self):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
-        response.mustcontain('Aucun utilisateur')
+        response.mustcontain('No player')
         response.form.fields['email'][0].value = 'user@yaal'
 
         response = response.form.submit(status=200)
@@ -70,7 +70,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = response.follow(status=200)
 
         response.mustcontain('Admin')
-        response.mustcontain('Aucun utilisateur')
+        response.mustcontain('No player')
 
 
     def test_on_connect_as(self):
@@ -80,7 +80,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
-        response = response.click('Connexion')
+        response = response.click('Connect')
         response = response.follow(status=200)
 
         assert 'text/html' == response.content_type
@@ -95,10 +95,10 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
-        response = response.click('Supprimer')
+        response = response.click('Delete')
         response = response.follow(status=200)
 
-        response.mustcontain('Aucun utilisateur')
+        response.mustcontain('No player')
         response.mustcontain(web.strings.USER_DELETE_SUCCESS)
 
 
@@ -108,7 +108,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.forms.DeletePlayer.make_url(FakePlayer()), status=200)
 
         response.mustcontain('Admin')
-        response.mustcontain('Aucun utilisateur')
+        response.mustcontain('No player')
         response.mustcontain(web.strings.USER_DELETE_FAILURE)
 
 
@@ -123,7 +123,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
-        response = response.click('Modifier')
+        response = response.click('Edit')
 
         assert response.form.fields['email'][0].value == 'user@yaal.fr'
         response.form.fields['email'][0].value = 'yop@yaal.fr'
@@ -144,7 +144,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
         response = self.testapp.get(web.admin.pages.Players.url, status=200)
         response.mustcontain('user@yaal.fr')
 
-        response = response.click('Modifier')
+        response = response.click('Edit')
 
         assert response.form.fields['email'][0].value == 'user@yaal.fr'
 
@@ -165,7 +165,7 @@ class TestEditPlayer(web.tests.helper.WebTestCase):
 
         with yzodb.connection():
             _user = models.players.read("user@yaal.fr")
-        response = response.click('Modifier', href=_user.id)
+        response = response.click('Edit', href=_user.id)
         response.form.fields['email'][0].value = 'previous_user@yaal.fr'
 
         response = response.form.submit(status=200)
