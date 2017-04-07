@@ -1,3 +1,5 @@
+import mock
+
 import transaction
 
 import web.tests.helper
@@ -122,8 +124,8 @@ class TestGameDetails(web.tests.helper.WebTestCase):
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
-
-    def test_start_game(self):
+    @mock.patch("mailings.start_game")
+    def test_start_game(self, mailings_start_game):
         with yzodb.connection():
             game = models.games.create_game('GAMENAME')
             player_A = game.add_player_email("A@domain.tld")
@@ -159,6 +161,7 @@ class TestGameDetails(web.tests.helper.WebTestCase):
             assert {player_A, player_B, player_C, player_D} == current_targets
             assert {player_A, player_B, player_C, player_D} == targetted_by_players
             assert {player_A, player_B, player_C, player_D} == set(game.players_loop)
+        mailings_start_game.assert_called_once_with(game)
 
         response.mustcontain(web.strings.GAME_STARTED_SUCCESS)
         response.mustcontain(no=['Start game'])

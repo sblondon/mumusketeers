@@ -33,6 +33,7 @@ class Game(models.Model):
         return player
 
     def start(self):
+        import mailings
         self._status = 1
         players = list(self.waiting_players)
         random.shuffle(players)
@@ -54,6 +55,8 @@ class Game(models.Model):
             player_target = target_loop[player]["current target"]
             player_hunter = target_loop[player]["targetted_by_player"]
             self._create_hunt(player_hunter, player)
+
+        mailings.start_game(self)
 
     def _create_hunt(self, hunter, target):
         import models.hunts

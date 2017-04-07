@@ -5,6 +5,7 @@ rstr==2.2.3
 slugid==1.0.7
 netifaces
 colored
+MarkdownMail==0.4.*
 
 #yaal libs:
 yrouting==0.6.0
