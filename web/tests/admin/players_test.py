@@ -87,19 +87,19 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
         response.mustcontain('Accueil')
 
 
-    def test_delete_user(self):
-        with yzodb.connection():
-            models.players.create_player('user@yaal.fr')
-            transaction.commit()
-
-        response = self.testapp.get(web.admin.pages.Players.url, status=200)
-        response.mustcontain('user@yaal.fr')
-
-        response = response.click('Delete')
-        response = response.follow(status=200)
-
-        response.mustcontain('No player')
-        response.mustcontain(web.strings.USER_DELETE_SUCCESS)
+#    def test_delete_user(self):
+#        with yzodb.connection():
+#            models.players.create_player('user@yaal.fr')
+#            transaction.commit()
+#
+#        response = self.testapp.get(web.admin.pages.Players.url, status=200)
+#        response.mustcontain('user@yaal.fr')
+#
+#        response = response.click('Delete')
+#        response = response.follow(status=200)
+#
+#        response.mustcontain('No player')
+#        response.mustcontain(web.strings.USER_DELETE_SUCCESS)
 
 
     def test_cannot_delete_user(self):
