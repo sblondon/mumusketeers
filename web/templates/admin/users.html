@@ -11,9 +11,9 @@
 <div class="row">
     <div class="col-md-8">
         <fieldset>
-            <legend>Liste des utilisateurs <span class="badge">{{ users_count }}</span></legend>
+            <legend>Players <span class="badge">{{ users_count }}</span></legend>
             {% if not users_count %}
-            Aucun utilisateur
+            No players
             {% else %}
             <table class="table table-hover">
                 <thead>
@@ -25,9 +25,9 @@
                 <tbody>
                     {% for user in users %}
                     <tr><td>{{ user.email }}</td>
-                        <td><a href="{{ forms.admin.ConnectAsPlayer.make_url(user) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Connexion</a>
-                            <a href="{{ forms.admin.DeletePlayer.make_url(user) }}" class="btn btn-danger btn-sm delete-button"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
-                            <a href="{{ forms.admin.EditPlayer.make_url(user) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+                        <td><a href="{{ forms.admin.ConnectAsPlayer.make_url(user) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-circle-arrow-right"></span> Connect</a>
+                            <a href="{{ forms.admin.DeletePlayer.make_url(user) }}" class="btn btn-danger btn-sm delete-button"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                            <a href="{{ forms.admin.EditPlayer.make_url(user) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                         </td>
 
                     </tr>
@@ -38,8 +38,8 @@
         </fieldset>
     </div>
     <div class="col-md-4">
-        {% call macros.render_form(form, form_title='Ajouter un utilisateur', action_text='Créer') %}
-            {{ macros.render_field(form.email, placeholder='Entrez l\'email') }}
+        {% call macros.render_form(form, form_title="Add player", action_text="Create") %}
+            {{ macros.render_field(form.email, placeholder="Insert e-mail") }}
         {% endcall %}
     </div>
 </div>
