@@ -16,7 +16,7 @@ check:
 	find web -name '*.py' -exec ./local.virtualenv/bin/pyflakes {} +
 
 test:
-	./local.virtualenv/bin/py.test --showlocals --ignore local.virtualenv --ignore node_modules --ignore media -n auto $* --cov web/ --cov models/ --color=yes
+	./local.virtualenv/bin/py.test --showlocals --ignore local.virtualenv --ignore node_modules --ignore media -n auto $* --color=yes
 
 clean:
 	find . -name "*.pyc" -delete
