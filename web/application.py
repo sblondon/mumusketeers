@@ -44,13 +44,12 @@ def make():
         os.mkdir(web.settings.LOGS_DIR)
     except OSError:
         pass
-    try:
-        logging.config.fileConfig(web.settings.LOGS_CONFIG_FILE,
-                defaults={
-                    "logs_dir": web.settings.LOGS_DIR,
-                    })
-    except KeyError:
-        logging.basicConfig(filename=web.settings.LOGS_DIR + "tests.log")
+    logger = logging.getLogger()
+    fh = logging.handlers.WatchedFileHandler(web.settings.LOG_FILE)
+    fh.setLevel(web.settings.LOG_LEVEL)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
 
     ytemplates.init(templates_dirs=web.settings.TEMPLATES_DIRS)
     ytemplates.get_env_jinja().filters['level_to_bootstrap_class'] = web.filters.level_to_bootstrap_class
