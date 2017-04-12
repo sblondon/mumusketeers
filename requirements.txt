@@ -13,7 +13,7 @@ ysessions==0.2.3
 ystatistics==0.6.1
 ytemplates==0.5.4
 ywsgi==0.7.0
-yzodb==1.0.*
+yzodb==1.0.2
 
 #for tests:
 mock==1.0.1
