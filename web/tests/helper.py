@@ -6,6 +6,7 @@ import yzodb
 import web.application
 import web.players.forms
 import web.settings
+import scripts.tests.env_settings
 
 
 class TestCase(yzodb.TestCase):
@@ -20,7 +21,6 @@ class WebTestCase(TestCase):
         self.testapp = webtest.TestApp(self.application)
 
     def tearDown(self):
-        shutil.rmtree(web.settings.PERSISTENT_DIR)
         super(WebTestCase, self).tearDown()
 
 
