@@ -2,7 +2,7 @@ import mock
 
 import transaction
 
-import web.tests.helper
+import web.test.helper
 
 import yzodb
 
@@ -12,7 +12,7 @@ import web.admin.pages
 import web.admin.forms
 
 
-class TestAdminGames(web.tests.helper.WebTestCase):
+class TestAdminGames(web.test.helper.WebTestCase):
 
     def test_no_games_from_admin_home(self):
         response = self.testapp.get(web.admin.pages.Home.url, status=200)
@@ -52,7 +52,7 @@ class TestAdminGames(web.tests.helper.WebTestCase):
         response.mustcontain(web.strings.GAME_CREATE_FAILURE)
 
 
-class TestGameDetails(web.tests.helper.WebTestCase):
+class TestGameDetails(web.test.helper.WebTestCase):
 
     def test_change_all(self):
         with yzodb.connection():

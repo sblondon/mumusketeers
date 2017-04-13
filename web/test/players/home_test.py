@@ -5,11 +5,11 @@ import webtest
 import models.games
 import models.players
 import web.application
-import web.tests.helper
+import web.test.helper
 import yzodb
 
 
-class TestHome(web.tests.helper.WebTestCase):
+class TestHome(web.test.helper.WebTestCase):
 
     def test(self):
         with yzodb.connection():
@@ -24,7 +24,7 @@ class TestHome(web.tests.helper.WebTestCase):
         response.mustcontain(player.id)
 
 
-class TestGhostification(web.tests.helper.WebTestCase):
+class TestGhostification(web.test.helper.WebTestCase):
     def test_ghostify_another_player(self):
         with yzodb.connection():
             game = models.games.create_game("whatever")

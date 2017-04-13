@@ -4,11 +4,11 @@ import webtest
 
 import models.players
 import web.application
-import web.tests.helper
+import web.test.helper
 import yzodb
 
 
-class TestHome(web.tests.helper.WebTestCase):
+class TestHome(web.test.helper.WebTestCase):
 
     def test(self):
         response = self.testapp.get('/', status=200)
@@ -17,7 +17,7 @@ class TestHome(web.tests.helper.WebTestCase):
         response.mustcontain('Ready to ghostify?')
 
 
-class Test404(web.tests.helper.WebTestCase):
+class Test404(web.test.helper.WebTestCase):
 
     def test(self):
         response = self.testapp.get('/this-url-does-not-exist', status=404)
@@ -26,7 +26,7 @@ class Test404(web.tests.helper.WebTestCase):
         response.mustcontain('404')
 
 
-class TestBadRequest(web.tests.helper.TestCase):
+class TestBadRequest(web.test.helper.TestCase):
     def test_debug(self):
         PreviousApp = web.application.YApp
         class BadRequestApp(object):

@@ -1,6 +1,6 @@
 import transaction
 
-import web.tests.helper
+import web.test.helper
 
 import yzodb
 
@@ -10,7 +10,7 @@ import web.admin.pages
 import web.admin.forms
 
 
-class TestAdminPlayers(web.tests.helper.WebTestCase):
+class TestAdminPlayers(web.test.helper.WebTestCase):
 
     def test_no_users_from_admin_home(self):
         response = self.testapp.get(web.admin.pages.Home.url, status=200)
@@ -113,7 +113,7 @@ class TestAdminPlayers(web.tests.helper.WebTestCase):
 
 
 
-class TestEditPlayer(web.tests.helper.WebTestCase):
+class TestEditPlayer(web.test.helper.WebTestCase):
 
     def test_change_all(self):
         with yzodb.connection():
