@@ -35,6 +35,9 @@ web.settings.STATISTICS_DIR = web.settings.PERSISTENT_DIR + 'statistics/'
 web.settings.NOTIFY_ON_500 = False
 web.settings.NOTIFY_AUTHOR = web.settings.APP_NAME + '-local'
 
+import markdownmail
+web.settings.SMTP_SERVER = markdownmail.NullServer()
+
 if __name__ == '__main__':
     info = "\tThe web service is available at " + web.settings.HOST
     print(colored.stylize(info, colored.fg("green")))

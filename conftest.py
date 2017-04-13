@@ -6,7 +6,7 @@ import yzodb
 
 import web.application
 import web.settings
-import web.test
+import webtest
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -25,5 +25,5 @@ def persistent_dir_fixture():
 
 @pytest.fixture(scope="session")
 def testapp():
-    return web.tests.TestApp(web.application.get())
+    return webtest.TestApp(web.application.make())
 
