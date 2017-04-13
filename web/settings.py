@@ -25,3 +25,5 @@ NOTIFY_ON_500 = False
 
 TEMPLATES_DIRS=("web/templates/",)
 
+SMTP_SERVER = "localhost"
+
