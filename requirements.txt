@@ -16,7 +16,6 @@ ywsgi==0.7.0
 yzodb==1.0.2
 
 #for tests:
-mock==1.0.1
 WebTest==2.0.27
 pytest==3.*
 pytest-cov==2.*

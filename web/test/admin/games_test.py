@@ -1,4 +1,4 @@
-import mock
+import unittest.mock
 
 import transaction
 
@@ -124,7 +124,7 @@ class TestGameDetails(web.test.helper.WebTestCase):
 
         response.mustcontain(web.strings.PLAYER_ADDED_SUCCESS.format(player="player@domain.tld", game='GAMENAME'))
 
-    @mock.patch("mailings.start_game")
+    @unittest.mock.patch("mailings.start_game")
     def test_start_game(self, mailings_start_game):
         with yzodb.connection():
             game = models.games.create_game('GAMENAME')
