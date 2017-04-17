@@ -1,3 +1,5 @@
+import unittest.mock
+
 import pytest
 import transaction
 import werkzeug.exceptions
@@ -32,11 +34,15 @@ def test_ghostify_another_player(testapp):
         target = game.add_player_email("target@domain.tld")
         game.start()
         transaction.commit()
+        hunt = player.hunter_hunt_for_game(game)
         url = web.players.pages.Home.make_url(player)
 
     response = testapp.get(url, status=200)
-    response.click(href=web.players.forms.GhostifyPlayer.make_url(game, player))
 
+    with unittest.mock.patch('mailings.request_confirm_ghostified') as request_confirm_ghostified:
+        response.click(href=web.players.forms.GhostifyPlayer.make_url(game, player))
+
+        request_confirm_ghostified.assert_called_once_with(game, hunt)
     with yzodb.connection():
         hunt = player.hunter_hunt_for_game(game)
         assert hunt.done_according_hunter
@@ -53,16 +59,19 @@ def test_ghostified_by_another_player(testapp):
         target = game.add_player_email("target@domain.tld")
         game.start()
         transaction.commit()
-        url = web.players.pages.Home.make_url(player)
+        hunt = player.hunter_hunt_for_game(game)
+        url = web.players.pages.Home.make_url(target)
 
     response = testapp.get(url, status=200)
-    response.click(href=web.players.forms.GhostifiedPlayer.make_url(game, player))
+    with unittest.mock.patch('mailings.request_confirm_ghostification') as request_confirm_ghostification:
+        response.click(href=web.players.forms.GhostifiedPlayer.make_url(game, target))
+        request_confirm_ghostification.assert_called_once_with(game, hunt)
 
     with yzodb.connection():
-        hunt = player.hunted_hunt_for_game(game)
+        hunt = target.hunted_hunt_for_game(game)
         assert False == hunt.done_according_hunter
         assert hunt.done_according_target
     assert 'text/html' == response.content_type
     response.mustcontain('<!-- player home page -->')
-    response.mustcontain(player.id)
+    response.mustcontain(target.id)
 

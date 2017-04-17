@@ -26,4 +26,24 @@ def start_game(game):
         email.send(web.settings.SMTP_SERVER)
 
 
+class _ConfirmGhostifiedTemplate(web.pages.Page):
+    template = 'confirm_ghostified.md'
+
+    def context_update(self):
+        return {"game": self.hunt, "hunt": self.hunt}
+
+def request_confirm_ghostified(game, hunt):
+    page = _ConfirmGhostifiedTemplate()
+    page.game = game
+    page.hunt = hunt
+    content = page.render()
+    email = markdownmail.MarkdownMail(
+            from_addr="noreply@changeme.tld",
+            to_addr=hunt.target.email,
+            subject="Confirm you've been ghostified",
+            content=content)
+    email.send(web.settings.SMTP_SERVER)
+
+def request_confirm_ghostification(game, player):
+    pass
 

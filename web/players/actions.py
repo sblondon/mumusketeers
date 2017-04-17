@@ -1,6 +1,7 @@
 import ywsgi
 import yzodb
 
+import mailings
 import models.games
 import models.players
 import web.players.forms
@@ -20,6 +21,8 @@ def ghostify_player(request, game_id, player_id):
     game = models.games.Game.read(game_id)
     player = models.players.Player.read(player_id)
     player.declare_ghostify_for_game(game)
+    hunt = player.hunter_hunt_for_game(game)
+    mailings.request_confirm_ghostified(game, hunt)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
 @yzodb.commit
@@ -27,5 +30,7 @@ def ghostified_player(request, game_id, player_id):
     game = models.games.Game.read(game_id)
     player = models.players.Player.read(player_id)
     player.declare_ghostified_for_game(game)
+    hunt = player.hunted_hunt_for_game(game)
+    mailings.request_confirm_ghostification(game, hunt)
     return ywsgi.redirect(web.players.pages.Home.make_url(player))
 
