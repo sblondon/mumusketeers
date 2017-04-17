@@ -13,9 +13,11 @@ class MailServer(markdownmail.NullServer):
         global send_called
         send_called += 1
         assert markdownmail.to_addr[0] in ("player-1@domain.tld", "player-2@domain.tld")
+        assert markdownmail._parts[0]
+        assert markdownmail._parts[1]
 
 
-def test_start():
+def test_start(init_ytemplates):
     SMTP_SERVER = web.settings.SMTP_SERVER
     try:
         web.settings.SMTP_SERVER = MailServer()

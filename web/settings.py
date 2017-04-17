@@ -23,7 +23,7 @@ NOTIFY_AUTHOR = APP_NAME
 NOTIFY_LOG_ONLY = True
 NOTIFY_ON_500 = False
 
-TEMPLATES_DIRS=("web/templates/",)
+TEMPLATES_DIRS=("web/templates/", "mailings/templates")
 
 SMTP_SERVER = "localhost"
 

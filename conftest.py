@@ -2,6 +2,7 @@ import os
 import shutil
 
 import pytest
+import ytemplates
 import yzodb
 
 import web.application
@@ -26,4 +27,11 @@ def persistent_dir_fixture():
 @pytest.fixture(scope="session")
 def testapp():
     return webtest.TestApp(web.application.make())
+
+@pytest.fixture(scope="session")
+def init_ytemplates():
+    ytemplates.init(templates_dirs=web.settings.TEMPLATES_DIRS)
+    ytemplates.get_env_jinja().filters['level_to_bootstrap_class'] = web.filters.level_to_bootstrap_class
+    ytemplates.get_env_jinja().filters['pretty_boolean'] = web.filters.pretty_boolean
+    ytemplates.get_env_jinja().filters['shuffle'] = web.filters.shuffle
 
