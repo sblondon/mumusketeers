@@ -41,14 +41,14 @@ def test_request_confirm_ghostified(init_ytemplates):
 
 class GhostifyMailServer(markdownmail.NullServer):
     def send(self, markdownmail):
-        global ghostified_send_call_count
-        ghostified_send_call_count += 1
+        global ghostify_send_call_count
+        ghostify_send_call_count += 1
         assert markdownmail.to_addr[0] == "player-1@domain.tld"
         assert markdownmail._parts[0]
         assert markdownmail._parts[1]
 
 
-def test_request_confirm_ghostified(init_ytemplates):
+def test_request_confirm_ghostification(init_ytemplates):
     SMTP_SERVER = web.settings.SMTP_SERVER
     with yzodb.connection():
         game = models.games.create_game("whatever")
@@ -61,9 +61,9 @@ def test_request_confirm_ghostified(init_ytemplates):
     try:
         web.settings.SMTP_SERVER = GhostifyMailServer()
         with yzodb.connection():
-            mailings.request_confirm_ghostified(game, hunt)
+            mailings.request_confirm_ghostification(game, hunt)
  
-        assert ghostified_send_call_count == 1
+        assert ghostify_send_call_count == 1
     finally:
         web.settings.SMTP_SERVER = SMTP_SERVER
 
