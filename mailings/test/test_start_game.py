@@ -9,7 +9,7 @@ send_called = 0
 
 
 class MailServer(markdownmail.NullServer):
-    def send(self, markdownmail):
+    def check(self, markdownmail):
         global send_called
         send_called += 1
         assert markdownmail.to_addr[0] in ("player-1@domain.tld", "player-2@domain.tld")

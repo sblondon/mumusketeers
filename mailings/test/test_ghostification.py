@@ -11,7 +11,7 @@ ghostify_send_call_count = 0
 
 
 class GhostifiedMailServer(markdownmail.NullServer):
-    def send(self, markdownmail):
+    def check(self, markdownmail):
         global ghostified_send_call_count
         ghostified_send_call_count += 1
         assert markdownmail.to_addr[0] == "player-2@domain.tld"
@@ -40,7 +40,7 @@ def test_request_confirm_ghostified(init_ytemplates):
 
 
 class GhostifyMailServer(markdownmail.NullServer):
-    def send(self, markdownmail):
+    def check(self, markdownmail):
         global ghostify_send_call_count
         ghostify_send_call_count += 1
         assert markdownmail.to_addr[0] == "player-1@domain.tld"
