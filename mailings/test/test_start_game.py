@@ -1,20 +1,19 @@
-import markdownmail
 import transaction
 import yzodb
 
 import web.settings
 import models.games
+import mailings.test
 
 send_called = 0
 
 
-class MailServer(markdownmail.NullServer):
+class MailServer(mailings.test.AbstractMailServer):
     def check(self, markdownmail):
+        super(MailServer, self).check(markdownmail)
         global send_called
         send_called += 1
         assert markdownmail.to_addr[0] in ("player-1@domain.tld", "player-2@domain.tld")
-        assert markdownmail._parts[0]
-        assert markdownmail._parts[1]
 
 
 def test_start(init_ytemplates):

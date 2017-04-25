@@ -1,22 +1,21 @@
-import markdownmail
 import transaction
 import yzodb
 
 import web.settings
 import models.games
 import mailings
+import mailings.test
 
 ghostified_send_call_count = 0
 ghostify_send_call_count = 0
 
 
-class GhostifiedMailServer(markdownmail.NullServer):
+class GhostifiedMailServer(mailings.test.AbstractMailServer):
     def check(self, markdownmail):
+        super(GhostifiedMailServer, self).check(markdownmail)
         global ghostified_send_call_count
         ghostified_send_call_count += 1
         assert markdownmail.to_addr[0] == "player-2@domain.tld"
-        assert markdownmail._parts[0]
-        assert markdownmail._parts[1]
 
 
 def test_request_confirm_ghostified(init_ytemplates):
@@ -39,13 +38,12 @@ def test_request_confirm_ghostified(init_ytemplates):
         web.settings.SMTP_SERVER = SMTP_SERVER
 
 
-class GhostifyMailServer(markdownmail.NullServer):
+class GhostifyMailServer(mailings.test.AbstractMailServer):
     def check(self, markdownmail):
+        super(GhostifyMailServer, self).check(markdownmail)
         global ghostify_send_call_count
         ghostify_send_call_count += 1
         assert markdownmail.to_addr[0] == "player-1@domain.tld"
-        assert markdownmail._parts[0]
-        assert markdownmail._parts[1]
 
 
 def test_request_confirm_ghostification(init_ytemplates):
