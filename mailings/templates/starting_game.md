@@ -19,8 +19,9 @@ In each case, each players have to validate the ghostification.
 
 
 Direct actions:
-if you ghostified the other player: <{{ forms.players.GhostifyPlayer.make_url(game, player) }}>
-if you have been ghostified by an other player: <{{ forms.players.GhostifiedPlayer.make_url(game, player) }}>
+
+* if you ghostified the other player: <{{ forms.players.GhostifyPlayer.make_url(game, player) }}>
+* if you have been ghostified by an other player: <{{ forms.players.GhostifiedPlayer.make_url(game, player) }}>
 
 
 
