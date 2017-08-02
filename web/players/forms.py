@@ -1,4 +1,5 @@
 import web.constantes
+import web.settings
 
 
 class AbstractGhostification:
@@ -6,7 +7,7 @@ class AbstractGhostification:
 
     @classmethod
     def make_url(cls, game, player):
-        return cls.action+"{game_id}/{player_id}".format(game_id=game.id, player_id=player.id)
+        return web.settings.HOST + cls.action + "{game_id}/{player_id}".format(game_id=game.id, player_id=player.id)
 
 
 class GhostifyPlayer(AbstractGhostification):

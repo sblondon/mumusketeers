@@ -1,6 +1,7 @@
 import web.constantes
 import web.pages
 import web.session
+import web.settings
 
 
 class AbstractPage(web.pages.Page):
@@ -9,7 +10,7 @@ class AbstractPage(web.pages.Page):
 
     @classmethod
     def make_url(cls, obj):
-        return cls.url + "{0}".format(obj.id)
+        return web.settings.HOST + cls.url + "{0}".format(obj.id)
 
 
 class Home(AbstractPage):
