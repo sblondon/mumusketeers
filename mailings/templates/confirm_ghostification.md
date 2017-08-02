@@ -3,8 +3,8 @@ The player {{ hunt.hunter.email }} claims you have ghostified him/her in the gam
 
 
 You can validate it directly at:
-{{ forms.players.GhostifyPlayer.make_url(game, hunt.hunter) }}
+<{{ forms.players.GhostifyPlayer.make_url(game, hunt.hunter) }}>
 
 You can validate ghostification on your page too:
-{{ pages.players.Home.make_url(hunt.hunter) }}
+<{{ pages.players.Home.make_url(hunt.hunter) }}>
 
