@@ -30,7 +30,7 @@ class _ConfirmGhostifiedTemplate(web.pages.Page):
     template = 'confirm_ghostified.md'
 
     def context_update(self):
-        return {"game": self.hunt, "hunt": self.hunt}
+        return {"game": self.game, "hunt": self.hunt}
 
 def request_confirm_ghostified(game, hunt):
     page = _ConfirmGhostifiedTemplate()
@@ -49,7 +49,7 @@ class _ConfirmGhostificationTemplate(web.pages.Page):
     template = 'confirm_ghostification.md'
 
     def context_update(self):
-        return {"game": self.hunt, "hunt": self.hunt}
+        return {"game": self.game, "hunt": self.hunt}
 
 def request_confirm_ghostification(game, hunt):
     page = _ConfirmGhostificationTemplate()
@@ -62,3 +62,4 @@ def request_confirm_ghostification(game, hunt):
             subject="Confirm you've ghostified a player",
             content=content)
     email.send(web.settings.SMTP_SERVER)
+
