@@ -1,4 +1,5 @@
 import yzodb
+import yzodb.types
 
 import models
 import web.session
@@ -93,7 +94,7 @@ class Player(models.Model):
 
     def add_for_game(self, game):
         self.wait_for_games.add(game)
-        self._ghostification_ids[game.id] = set()
+        self._ghostification_ids[game.id] = yzodb.types.Set()
 
     @property
     def games(self):

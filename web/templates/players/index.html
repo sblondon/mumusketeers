@@ -9,6 +9,8 @@
                 Preparing
             {% elif game.running %}
                 Running
+            {% elif game.ended %}
+                Finished
             {% else %}
                 Unknown
             {% endif %}</small>
@@ -35,6 +37,9 @@
                     {% endif %}
                 </div>
                 {% endif %}
+            {% endif %}
+
+            {% if game.running or game.ended %}
                 Score: {{ player.ghostified_players_for_game(game) | length }} ghostification(s)
             {% endif %}
         {% endfor %}

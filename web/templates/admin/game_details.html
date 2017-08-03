@@ -76,7 +76,7 @@
    {% endif %}
 </div>
 
-{% if game.running %}
+{% if game.running or game.ended %}
 <div class="row">
    <h2>Players statuses</h2>
    <table class="table table-striped table-condensed">

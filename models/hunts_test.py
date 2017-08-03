@@ -65,6 +65,21 @@ def test_change_target_when_hunter_is_the_last_declaring_ghostification():
         assert False == next_target.is_ghostified_for_game(game)
 
 
+def test_when_only_one_player_is_alive__the_game_ends():
+    with yzodb.connection():
+        game = models.games.create_game("whatever")
+        player_1 = game.add_player_email("player-1@domain.tld")
+        player_2 = game.add_player_email("player-2@domain.tld")
+        game.start()
+        hunter, target = game.players_loop[:-1]
+        hunter.declare_ghostify_for_game(game)
+        target.declare_ghostified_for_game(game)
+        transaction.commit()
+
+    with yzodb.connection():
+        assert game.ended
+
+
 def test_add_ghostifications():
     with yzodb.connection():
         game = models.games.create_game("whatever")

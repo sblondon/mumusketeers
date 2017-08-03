@@ -13,6 +13,7 @@ def create_game(name):
 
 _PREPARING_STATUS = 0
 _RUNNING_STATUS = 1
+_ENDED_STATUS = 2
 
 class Game(models.Model):
     table = 'games'
@@ -78,6 +79,9 @@ class Game(models.Model):
                 player = player.current_target_for_game(self)
         return loop
 
+    def end(self):
+        self._status = _ENDED_STATUS
+
     @property
     def preparing(self):
         return not self._status
@@ -85,4 +89,8 @@ class Game(models.Model):
     @property
     def running(self):
         return self._status == _RUNNING_STATUS
+
+    @property
+    def ended(self):
+        return self._status == _ENDED_STATUS
 

@@ -21,6 +21,8 @@ class Hunt(models.Model):
     def update(self, game):
         if self.done_according_hunter and self.done_according_target:
             next_hunt = self.target.hunter_hunt_for_game(game)
+            if next_hunt.target == self.hunter:
+                game.end()
             self.hunter.add_current_hunt_for_game(next_hunt, game)
             next_hunt.hunter = self.hunter
             self.target.ghostified.add(game)
