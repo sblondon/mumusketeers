@@ -15,7 +15,7 @@
         </h2>
 
             {% if game.running %}
-                {% if player.ghostified %}
+                {% if player.is_ghostified_for_game(game) %}
                 <p>You have been ghostified.</p>
                 {% else %}
                 <p>Your current target is {{ player.current_target_for_game(game).email }}.</p>
