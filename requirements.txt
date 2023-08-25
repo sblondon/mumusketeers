@@ -1,6 +1,6 @@
 #external libs:
 WTForms==2.0.2
-uWSGI==2.0.14
+uWSGI==2.0.22
 rstr==2.2.3
 slugid==1.0.7
 netifaces
